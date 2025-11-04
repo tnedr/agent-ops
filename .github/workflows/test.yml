@@ -30,9 +30,17 @@ jobs:
           cd agt
           uv pip install ruff
           uv run ruff check .
+          uv run ruff check --select I .  # Check import sorting
       
-      - name: Run tests
+      - name: Run tests with coverage
         run: |
           cd agt
-          uv run pytest tests/ -v
+          uv run pytest tests/ -v --cov=agt --cov-report=term-missing --cov-report=xml --cov-fail-under=80
+      
+      - name: Upload coverage to Codecov (optional)
+        if: always()
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./agt/coverage.xml
+          fail_ci_if_error: false
 
