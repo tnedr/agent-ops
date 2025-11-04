@@ -42,6 +42,11 @@ agt run npm install
 agt run echo "Hello from worktree"
 ```
 
+**Windows Note:** On Windows, `agt run` uses `cmd.exe` (not PowerShell) when `shell=True` is used. For best compatibility:
+- Use Python commands: `python -m agt run "python -c \"print('test')\""`
+- Use simple cmd.exe commands: `python -m agt run "dir"` or `python -m agt run "echo test > file.txt"`
+- Avoid PowerShell-specific cmdlets (e.g., `Get-ChildItem`, `Set-Content`)
+
 **Note:** The command runs in the worktree directory, so relative paths are relative to the worktree.
 
 ---

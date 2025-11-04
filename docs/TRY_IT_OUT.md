@@ -37,11 +37,12 @@ pip install -e .  # or: uv pip install -e .
 cd ../..
 
 # 3. Test basic workflow
-agt start
-agt run "echo '# Test from agent-tools' > test_agent.txt"
-agt commit "test: verify agent-tools workflow"
-agt push
-agt clean
+# On Windows, use: python -m agt instead of agt
+python -m agt start
+python -m agt run "echo '# Test from agent-tools' > test_agent.txt"
+python -m agt commit "test: verify agent-tools workflow"
+python -m agt push
+python -m agt clean
 ```
 
 ### Option 2: Automated Setup (Windows PowerShell)
@@ -62,32 +63,34 @@ If you have a setup script available:
 
 ```bash
 # 1. Start worktree
-agt start
+python -m agt start
 # Output: ✅ Worktree ready: .work/agent-xxxx (branch feat/agent-xxxx)
 #         AGENT_ID=agent-xxxx
 
 # 2. Create/modify files
-agt run "echo 'Hello from agent' > output.txt"
-agt run "ls -la"
+# On Windows, use PowerShell-compatible commands
+python -m agt run "Set-Content -Path output.txt -Value 'Hello from agent'"
+python -m agt run "Get-ChildItem"  # Use Get-ChildItem instead of ls on Windows
 
 # 3. Commit changes
-agt commit "feat: add test output"
+python -m agt commit "feat: add test output"
 
 # 4. Push to remote
-agt push
+python -m agt push
 # Output: 🚀 Pushed to remote; open a PR in the UI if needed
 
 # 5. Verify branch was created
 git branch -a | grep feat/agent
+# On Windows PowerShell: git branch -a | Select-String "feat/agent"
 
 # 6. Optional: Open PR manually in GitHub UI
 # (or use: gh pr create --title "Test PR" --body "Testing agent-tools")
 
 # 7. Optional: Merge locally (if permitted and no branch protection)
-agt merge
+python -m agt merge
 
 # 8. Clean up
-agt clean
+python -m agt clean
 ```
 
 ### Alternative: Using Python Module
@@ -134,53 +137,86 @@ python -m agt push
 
 ### Windows Command Compatibility
 
-**Important**: When using `agt run`, use PowerShell-compatible commands:
+**Important**: When using `agt run` on Windows, note that `subprocess.run(..., shell=True)` uses **cmd.exe**, not PowerShell.
 
-❌ **Don't use** (Unix commands):
+**Limitations**:
+- PowerShell-specific cmdlets (e.g., `Get-ChildItem`, `Set-Content`) may not work as expected
+- Use cmd.exe-compatible commands or Python scripts instead
+
+**Recommended approaches**:
+
+1. **Use Python commands** (works cross-platform):
 ```powershell
-python -m agt run "ls -la"
-python -m agt run "echo 'test' > file.txt"
+python -m agt run "python -c \"print('test')\""
+python -m agt run "python -c \"with open('test.txt', 'w') as f: f.write('test')\""
 ```
 
-✅ **Use instead** (PowerShell commands):
+2. **Use simple cmd.exe commands**:
 ```powershell
-python -m agt run "Get-ChildItem"
-python -m agt run "Set-Content -Path file.txt -Value 'test'"
-python -m agt run "New-Item -ItemType File -Path newfile.txt"
+python -m agt run "dir"
+python -m agt run "echo test > file.txt"
+python -m agt run "type file.txt"
 ```
+
+3. **Use Python scripts** (best for complex operations):
+```powershell
+# Create a script
+python -m agt run "python -c \"import os; os.makedirs('subdir', exist_ok=True)\""
+```
+
+❌ **Don't use** (PowerShell cmdlets - may not work):
+```powershell
+python -m agt run "Get-ChildItem"  # PowerShell cmdlet
+python -m agt run "Set-Content -Path file.txt -Value 'test'"  # PowerShell cmdlet
+```
+
+**Note**: If you need PowerShell-specific functionality, consider running PowerShell commands directly or using Python scripts for cross-platform compatibility.
 
 ### Unicode Output
 
-**Fixed in v0.1.0**: The CLI automatically handles Windows terminal encoding issues. If Unicode characters can't be displayed, ASCII fallbacks are used automatically.
+**Fixed in v0.1.0**: The CLI automatically handles Windows terminal encoding issues. If Unicode characters can't be displayed, ASCII fallbacks are used automatically:
+- `✅` → `[OK]`
+- `🚀` → `[PUSHED]`
+- `❌` → `[ERROR]`
 
 ### Environment Variables
 
 PowerShell automatically preserves `AGENT_ID` between commands in the same session:
 
 ```powershell
-agt start
-# AGENT_ID is set automatically
+python -m agt start
+# AGENT_ID is set automatically (check output for AGENT_ID=agent-xxxx)
 $env:AGENT_ID  # Shows the agent ID
 
 # Use in subsequent commands
-agt run "command"
-agt commit "message"
+python -m agt run "command"
+python -m agt commit "message"
+```
+
+**Note**: On Windows, you may need to use `python -m agt` instead of just `agt` if the command is not in PATH. Also, ensure you're in a virtual environment or activate it first:
+
+```powershell
+.\.venv\Scripts\Activate.ps1  # If using venv
+python -m agt start
 ```
 
 ## Verify Installation
 
 ```bash
-# Check if agt command is available
+# Check if agt command is available (may not work on Windows)
 agt --help
 
-# Check version
-python -m agt --help
+# On Windows, use Python module instead:
+python -m agt start
 
 # Verify worktree creation
-agt start
-ls -la .work/  # or: dir .work\ on Windows
-agt clean
+python -m agt start
+# On Windows PowerShell:
+Get-ChildItem .work\  # or: dir .work\ on Windows
+python -m agt clean
 ```
+
+**Windows Note**: The `agt` command may not be in PATH. Always use `python -m agt` on Windows, or activate your virtual environment first.
 
 ## Troubleshooting
 
@@ -208,11 +244,14 @@ cd ../..
 
 **Symptoms**: Installation fails with "No package files found" or similar
 
-**Fix**: The package structure has been fixed. If you encounter this issue:
+**Status**: ✅ **Fixed in v0.1.0** - Package structure has been fixed in `pyproject.toml`
+
+**Solution**: If you encounter this issue, update to the latest version:
 
 ```bash
-cd .tools/agt
-# Verify pyproject.toml contains [tool.hatch.build.targets.wheel] section
+cd .tools
+git pull origin main
+cd agt
 pip install -e . --force-reinstall
 ```
 
@@ -241,22 +280,16 @@ pip install -e . --force-reinstall
 
 **Symptoms**: `error: pathspec 'message' did not match any file(s) known to git`
 
-**Root Cause**: Fixed in v0.1.0 - commit command now uses argument list instead of shell command.
+**Status**: ✅ **Fixed in v0.1.0** - Commit command now uses argument list instead of shell command
 
-**Solutions**:
+**Solution**: Update to the latest version:
 
-1. **Update to latest version**:
-   ```bash
-   cd .tools
-   git pull origin main
-   cd agt
-   pip install -e . --force-reinstall
-   ```
-
-2. **If still failing**, use Python module directly:
-   ```powershell
-   python -m agt commit "your message"
-   ```
+```bash
+cd .tools
+git pull origin main
+cd agt
+pip install -e . --force-reinstall
+```
 
 ### Issue: Unicode encoding errors (Windows)
 
@@ -336,7 +369,7 @@ py -3.11 -m pip install -e .
 ```powershell
 # PowerShell preserves env vars in same session
 # If switching shells, re-export:
-$env:AGENT_ID = "agent-xxxx"  # Use the ID from agt start
+$env:AGENT_ID = "agent-xxxx"  # Use the ID from python -m agt start
 
 # Or use single command chain:
 python -m agt start; python -m agt run "command"; python -m agt commit "message"
@@ -357,10 +390,10 @@ git push origin HEAD
 
 **After (agent-tools)**:
 ```bash
-agt start
-agt run "your-commands"
-agt commit "feat: changes"
-agt push
+python -m agt start
+python -m agt run "your-commands"
+python -m agt commit "feat: changes"
+python -m agt push
 ```
 
 **Benefits**:
@@ -368,6 +401,125 @@ agt push
 - ✅ Automated workflow
 - ✅ Less manual Git commands
 - ✅ Isolated environment per agent
+
+## Updating the Submodule
+
+**Important**: Git submodules do NOT update automatically. When the `agent-ops` repository is updated, you need to manually update the submodule in each project that uses it.
+
+### How to Update to Latest Version
+
+#### Option 1: Update to Latest on Tracked Branch (Recommended)
+
+```bash
+# Update submodule to latest commit on the tracked branch (main)
+git submodule update --remote .tools
+
+# This fetches the latest changes and updates the submodule
+# You need to commit this change in your main repository
+git add .tools
+git commit -m "chore: update agent-tools submodule"
+```
+
+#### Option 2: Update Manually
+
+```bash
+# Navigate to submodule directory
+cd .tools
+
+# Pull latest changes
+git pull origin main
+
+# Go back to main repository
+cd ..
+
+# Stage the submodule update
+git add .tools
+git commit -m "chore: update agent-tools submodule"
+```
+
+#### Option 3: Update to Specific Version/Tag
+
+```bash
+# Update to a specific tag (e.g., v0.1.0)
+cd .tools
+git fetch origin
+git checkout v0.1.0  # or any tag/branch/commit
+cd ..
+
+# Commit the update
+git add .tools
+git commit -m "chore: update agent-tools to v0.1.0"
+```
+
+### After Updating
+
+After updating the submodule, you may need to reinstall the package:
+
+```bash
+# Reinstall the package (recommended after update)
+cd .tools/agt
+pip install -e . --force-reinstall
+# or: uv pip install -e . --force-reinstall
+cd ../..
+```
+
+### Windows PowerShell
+
+```powershell
+# Update submodule to latest
+git submodule update --remote .tools
+
+# Commit the update
+git add .tools
+git commit -m "chore: update agent-tools submodule"
+
+# Reinstall (if needed)
+cd .tools/agt
+pip install -e . --force-reinstall
+cd ../..
+```
+
+### Checking Current Version
+
+```bash
+# Check which commit the submodule is pointing to
+cd .tools
+git log -1 --oneline
+git describe --tags  # If tags are available
+cd ..
+```
+
+### Common Update Scenarios
+
+**Scenario 1: Want latest features automatically**
+- Use `git submodule update --remote` regularly
+- Consider adding this to your CI/CD pipeline
+
+**Scenario 2: Want stable version**
+- Pin to a specific tag: `cd .tools && git checkout v0.1.0`
+- Update manually when needed
+
+**Scenario 3: Development/testing**
+- Track `main` branch: `git submodule update --remote --merge .tools`
+- Update frequently to get latest changes
+
+### Important Notes
+
+1. **Submodules track specific commits, not branches**
+   - Even if you track a branch, the submodule points to a specific commit
+   - `git submodule update --remote` updates to the latest commit on the tracked branch
+
+2. **Each repository needs manual update**
+   - If you use agent-tools in multiple repositories, update each one separately
+   - There's no automatic sync across repositories
+
+3. **Update frequency**
+   - Update when you need new features or bug fixes
+   - Consider setting up a reminder or automation
+
+4. **Version pinning**
+   - For production, consider pinning to specific tags/versions
+   - For development, tracking `main` branch is fine
 
 ## Clean Up After Testing
 
@@ -379,7 +531,7 @@ git submodule deinit .tools
 git rm .tools
 rm -rf .git/modules/.tools
 
-# Or keep it for future use
+# Or keep it for future use (just update it)
 git submodule update --remote
 ```
 
@@ -413,14 +565,13 @@ After successful testing:
 - [ ] Prerequisites verified (Python 3.11+, Git with worktree)
 - [ ] Submodule added successfully
 - [ ] Installation completed (`pip install -e .`)
-- [ ] `agt --help` works
-- [ ] `agt start` creates worktree
-- [ ] `agt run` executes commands
-- [ ] `agt commit` creates commits
-- [ ] `agt push` pushes to remote
+- [ ] `python -m agt start` works (or `agt start` if in PATH)
+- [ ] `python -m agt run` executes commands (use Windows-compatible commands)
+- [ ] `python -m agt commit` creates commits
+- [ ] `python -m agt push` pushes to remote
 - [ ] Branch appears in remote repository
-- [ ] `agt clean` removes worktree
-- [ ] (Optional) `agt merge` works if permitted
+- [ ] `python -m agt clean` removes worktree
+- [ ] (Optional) `python -m agt merge` works if permitted
 
 ## Getting Help
 
@@ -434,6 +585,8 @@ If you encounter issues:
 
 ## Example: Complete Test Session
 
+### Linux/Mac
+
 ```bash
 # Full test session (copy-paste ready)
 REPO_URL="https://github.com/tnedr/agent-ops"
@@ -446,4 +599,38 @@ agt commit "test: complete workflow test"
 agt push
 echo "✅ Test complete! Check GitHub for the new branch."
 agt clean
+```
+
+### Windows PowerShell
+
+```powershell
+# Full test session (copy-paste ready)
+$REPO_URL = "https://github.com/tnedr/agent-ops"
+git submodule add -b main $REPO_URL .tools
+git submodule update --init --recursive
+cd .tools/agt
+pip install -e .  # or: uv pip install -e .
+cd ../..
+
+# Activate virtual environment if using one
+.\.venv\Scripts\Activate.ps1
+
+# Start worktree
+python -m agt start
+# Note AGENT_ID from output (e.g., AGENT_ID=agent-xxxx)
+
+# Create test file (use PowerShell-compatible commands)
+python -m agt run "Set-Content -Path test.txt -Value 'Agent tools test'"
+
+# View file
+python -m agt run "Get-Content test.txt"
+
+# Commit
+python -m agt commit "test: complete workflow test"
+
+# Push
+python -m agt push
+
+# Clean up
+python -m agt clean
 ```

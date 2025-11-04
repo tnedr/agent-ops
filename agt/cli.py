@@ -1,7 +1,6 @@
 """CLI entrypoint for agt command."""
 
 import os
-import shlex
 import subprocess
 import sys
 from pathlib import Path
@@ -15,16 +14,16 @@ from agt.worktree import (
 )
 
 
-def safe_print(text: str, file=None) -> None:
-    """Print text with Unicode fallback for Windows compatibility."""
+def safe_print(msg: str, file=sys.stdout) -> None:
+    """Print message with ASCII fallback for Unicode characters."""
     try:
-        print(text, file=file)
+        print(msg, file=file)
     except UnicodeEncodeError:
-        # Fallback to ASCII-safe characters on Windows
-        text = text.replace("✅", "[OK]")
-        text = text.replace("🚀", "[PUSHED]")
-        text = text.replace("❌", "[ERROR]")
-        print(text, file=file)
+        # Fallback to ASCII-safe characters
+        msg = msg.replace("✅", "[OK]")
+        msg = msg.replace("🚀", "[PUSHED]")
+        msg = msg.replace("❌", "[ERROR]")
+        print(msg, file=file)
 
 
 def err(msg: str) -> None:
@@ -64,6 +63,7 @@ def cmd_run(command: list[str]) -> None:
     
     # Execute command in worktree directory
     # Join command parts and run in shell to support pipes, redirects, etc.
+    # Note: On Windows, shell=True uses cmd.exe, not PowerShell
     cmd_str = " ".join(command)
     try:
         subprocess.run(cmd_str, check=True, cwd=worktree_path, shell=True)
@@ -84,9 +84,9 @@ def cmd_commit(message: str) -> None:
         err(f"Worktree not found: {worktree_path}. Run 'agt start' first!")
     
     # Stage all changes
-    subprocess.run(["git", "add", "-A"], check=True, cwd=worktree_path)
+    subprocess.run("git add -A", shell=True, check=True, cwd=worktree_path)
     
-    # Commit - use argument list for Windows compatibility
+    # Commit - use list form to avoid shell escaping issues
     subprocess.run(
         ["git", "commit", "-m", message],
         check=True,
@@ -110,7 +110,8 @@ def cmd_push(remote: str = "origin") -> None:
     
     # Push branch
     subprocess.run(
-        ["git", "push", "-u", remote, "HEAD"],
+        f"git push -u {remote} HEAD",
+        shell=True,
         check=True,
         cwd=worktree_path,
     )
@@ -133,23 +134,24 @@ def cmd_merge() -> None:
     branch_name = f"feat/{agent_id}"
     
     # Fetch latest main
-    subprocess.run(["git", "fetch", "origin", "main"], check=True, cwd=worktree_path)
+    subprocess.run("git fetch origin main", shell=True, check=True, cwd=worktree_path)
     
     # Rebase onto main
-    subprocess.run(["git", "rebase", "origin/main"], check=True, cwd=worktree_path)
+    subprocess.run("git rebase origin/main", shell=True, check=True, cwd=worktree_path)
     
     # Switch to main branch in root repo
-    subprocess.run(["git", "checkout", "main"], check=True, cwd=root)
+    subprocess.run("git checkout main", shell=True, check=True, cwd=root)
     
     # Fast-forward merge
     subprocess.run(
-        ["git", "merge", "--ff-only", branch_name],
+        f"git merge --ff-only {branch_name}",
+        shell=True,
         check=True,
         cwd=root,
     )
     
     # Push to remote
-    subprocess.run(["git", "push", "origin", "main"], check=True, cwd=root)
+    subprocess.run("git push origin main", shell=True, check=True, cwd=root)
     
     safe_print("✅ Branch fast-forwarded to main")
 
