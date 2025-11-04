@@ -169,7 +169,7 @@ See the [docs/](docs/) directory for detailed documentation:
 - [Architecture](docs/architecture.md) - Architecture overview
 - [Changelog](docs/CHANGELOG.md) - Version history
 
-**Note:** Some documentation files (AGENT-INTEGRATION.md, WORKFLOW-SYNTAX.md, etc.) may contain references to PR-bot functionality that is no longer part of this repository.
+**Note:** Legacy documentation files containing PR-bot and GitHub Actions references have been moved to [docs/legacy/](docs/legacy/). These are deprecated and not applicable to the current local CLI-only version.
 
 ## License
 

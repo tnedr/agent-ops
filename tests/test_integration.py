@@ -255,3 +255,97 @@ def test_clean_removes_worktree(git_repo, monkeypatch):
     finally:
         os.chdir(original_cwd)
 
+
+@pytest.mark.integration
+def test_full_workflow_with_merge(git_repo_with_remote, monkeypatch):
+    """Test full workflow: start → commit → push → merge → verify main."""
+    git_repo, bare_remote = git_repo_with_remote
+    
+    env = os.environ.copy()
+    env["GIT_AUTHOR_NAME"] = env["GIT_COMMITTER_NAME"] = "Test User"
+    env["GIT_AUTHOR_EMAIL"] = env["GIT_COMMITTER_EMAIL"] = "test@example.com"
+    
+    original_cwd = os.getcwd()
+    os.chdir(git_repo)
+    
+    try:
+        # Clear AGENT_ID
+        if "AGENT_ID" in env:
+            del env["AGENT_ID"]
+            monkeypatch.delenv("AGENT_ID")
+        
+        # Start worktree
+        result = subprocess.run(
+            [sys.executable, "-m", "agt", "start"],
+            cwd=git_repo,
+            env=env,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        
+        # Extract AGENT_ID
+        lines = result.stdout.split("\n")
+        agent_id_line = [line for line in lines if line.startswith("AGENT_ID=")]
+        assert len(agent_id_line) > 0
+        agent_id = agent_id_line[0].split("=", 1)[1]
+        env["AGENT_ID"] = agent_id
+        monkeypatch.setenv("AGENT_ID", agent_id)
+        
+        worktree_path = git_repo / ".work" / agent_id
+        branch_name = f"feat/{agent_id}"
+        
+        # Create and commit file
+        test_file = worktree_path / "demo.txt"
+        test_file.write_text("hello from agent merge test")
+        
+        subprocess.run(
+            [sys.executable, "-m", "agt", "commit", "feat: merge test"],
+            cwd=git_repo,
+            env=env,
+            check=True,
+            capture_output=True,
+        )
+        
+        # Push to remote
+        subprocess.run(
+            [sys.executable, "-m", "agt", "push", "origin"],
+            cwd=git_repo,
+            env=env,
+            check=True,
+            capture_output=True,
+        )
+        
+        # Merge into main
+        subprocess.run(
+            [sys.executable, "-m", "agt", "merge"],
+            cwd=git_repo,
+            env=env,
+            check=True,
+            capture_output=True,
+        )
+        
+        # Verify merge: check that main branch has the commit
+        result = subprocess.run(
+            ["git", "log", "--oneline", "-1", "main"],
+            cwd=git_repo,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        
+        assert "feat: merge test" in result.stdout
+        
+        # Verify that main was pushed to remote
+        result = subprocess.run(
+            ["git", "ls-remote", "--heads", str(bare_remote), "main"],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        
+        assert "refs/heads/main" in result.stdout
+        
+    finally:
+        os.chdir(original_cwd)
+
