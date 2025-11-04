@@ -67,19 +67,21 @@ See the [examples/](examples/) directory for:
 
 ```bash
 cd agt
-pip install -e ".[dev]"
+uv pip install -e ".[dev]"  # or: pip install -e ".[dev]"
 ```
+
+**Note**: Uses UV Cache Workflow - minimal `.venv`, global cache.
 
 ### Run Tests
 
 ```bash
-pytest tests/ -v
+uv run pytest tests/ -v  # or: pytest tests/ -v
 ```
 
 ### Run Linter
 
 ```bash
-ruff check .
+uv run ruff check .  # or: ruff check .
 ```
 
 ## Project Structure

@@ -23,13 +23,15 @@ Worktree-based agent workflow management toolkit.
 # From source
 git clone https://github.com/tnedr/agent-ops
 cd agent-ops/agt
-pip install -e .
+uv pip install -e .  # or: pip install -e .
 
 # Or as submodule
 git submodule add -b main https://github.com/tnedr/agent-ops .tools
 cd .tools/agt
-pip install -e .
+uv pip install -e .  # or: pip install -e .
 ```
+
+**Note**: This project follows UV Cache Workflow Guidelines. If using `uv`, ensure `UV_CACHE_DIR` is set (e.g., `E:\uv-cache` on Windows).
 
 ### Usage
 
@@ -132,13 +134,15 @@ See the [docs/](docs/) directory for detailed documentation:
 ```bash
 git submodule add -b main https://github.com/tnedr/agent-ops .tools
 cd .tools/agt
-pip install -e .
+uv pip install -e .  # or: pip install -e .
 ```
+
+**Note**: Uses UV Cache Workflow - minimal `.venv`, global cache (`E:\uv-cache` or `UV_CACHE_DIR`).
 
 ### From PyPI (when published)
 
 ```bash
-pip install agent-tools
+uv pip install agent-tools  # or: pip install agent-tools
 # or
 pipx install agent-tools
 ```
@@ -148,7 +152,7 @@ pipx install agent-tools
 ```bash
 git clone https://github.com/tnedr/agent-ops
 cd agent-ops/agt
-pip install -e .
+uv pip install -e .  # or: pip install -e .
 ```
 
 ## Versioning
@@ -160,7 +164,7 @@ This project uses semantic versioning. To use a specific version:
 git submodule add -b v0.1.0 https://github.com/tnedr/agent-ops .tools
 
 # PyPI (when published)
-pip install agent-tools==0.1.0
+uv pip install agent-tools==0.1.0  # or: pip install agent-tools==0.1.0
 ```
 
 ## Testing in Another Project
@@ -170,7 +174,8 @@ Want to try it out? See [Try It Out Guide](docs/TRY_IT_OUT.md) for a quick 5-min
 ```bash
 # Quick test
 git submodule add -b main https://github.com/tnedr/agent-ops .tools
-cd .tools/agt && pip install -e . && cd ../..
+cd .tools/agt && uv pip install -e . && cd ../..
+# or: cd .tools/agt && pip install -e . && cd ../..
 agt start
 agt run "echo 'test' > test.txt"
 agt commit "test: verify agent-tools"

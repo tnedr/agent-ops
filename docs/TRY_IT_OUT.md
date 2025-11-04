@@ -20,6 +20,9 @@ git --version  # Should support worktree
 
 # Check Git worktree support
 git worktree list
+
+# Check UV (optional, for UV Cache Workflow)
+uv --version  # If available, uses global cache
 ```
 
 ## Quick Test (5 minutes)
@@ -31,9 +34,16 @@ git worktree list
 git submodule add -b main https://github.com/tnedr/agent-ops .tools
 git submodule update --init --recursive
 
-# 2. Install
+# 2. Install (requires activated virtual environment)
 cd .tools/agt
-pip install -e .  # or: uv pip install -e .
+
+# Activate your virtual environment first, or create one:
+# python -m venv .venv --symlinks  # Minimal venv (UV Cache Workflow)
+# .\.venv\Scripts\Activate.ps1  # Windows PowerShell
+# source .venv/bin/activate      # Linux/Mac
+
+# Use uv for installation (uses global cache, minimal .venv)
+uv pip install -e .  # or: pip install -e .
 cd ../..
 
 # 3. Test basic workflow
@@ -66,11 +76,15 @@ If you have a setup script available:
 python -m agt start
 # Output: ✅ Worktree ready: .work/agent-xxxx (branch feat/agent-xxxx)
 #         AGENT_ID=agent-xxxx
+# 
+# IMPORTANT: Extract AGENT_ID from output and set it manually:
+# On Windows PowerShell: $env:AGENT_ID = "agent-xxxx"
+# On Linux/Mac: export AGENT_ID=agent-xxxx
 
 # 2. Create/modify files
-# On Windows, use PowerShell-compatible commands
-python -m agt run "Set-Content -Path output.txt -Value 'Hello from agent'"
-python -m agt run "Get-ChildItem"  # Use Get-ChildItem instead of ls on Windows
+# On Windows, use cmd.exe-compatible commands (not PowerShell cmdlets)
+python -m agt run "echo Hello from agent > output.txt"
+python -m agt run "dir"  # Use dir instead of ls on Windows
 
 # 3. Commit changes
 python -m agt commit "feat: add test output"
@@ -118,10 +132,10 @@ $REPO_URL = "https://github.com/tnedr/agent-ops"
 git submodule add -b main $REPO_URL .tools
 git submodule update --init --recursive
 
-# Install (check for uv first)
+# Install (prefer uv for UV Cache Workflow)
 if (Get-Command uv -ErrorAction SilentlyContinue) {
     cd .tools/agt
-    uv pip install -e .
+    uv pip install -e .  # Uses global cache (UV_CACHE_DIR), minimal .venv
 } else {
     cd .tools/agt
     pip install -e .
@@ -130,7 +144,11 @@ cd ../..
 
 # Test (use python -m agt on Windows for best compatibility)
 python -m agt start
-python -m agt run "Set-Content -Path test.txt -Value 'test'"
+# Extract AGENT_ID from output and set it:
+# $env:AGENT_ID = "agent-xxxx"  # Replace xxxx with actual ID
+
+# Use cmd.exe-compatible commands (not PowerShell cmdlets)
+python -m agt run "echo test > test.txt"
 python -m agt commit "test: PowerShell test"
 python -m agt push
 ```
@@ -181,14 +199,20 @@ python -m agt run "Set-Content -Path file.txt -Value 'test'"  # PowerShell cmdle
 
 ### Environment Variables
 
-PowerShell automatically preserves `AGENT_ID` between commands in the same session:
+**Important**: `AGENT_ID` is printed in the output but NOT automatically set as an environment variable. You must extract it from the output and set it manually:
 
 ```powershell
+# Step 1: Start worktree
 python -m agt start
-# AGENT_ID is set automatically (check output for AGENT_ID=agent-xxxx)
-$env:AGENT_ID  # Shows the agent ID
+# Output shows: AGENT_ID=agent-xxxx
 
-# Use in subsequent commands
+# Step 2: Extract and set AGENT_ID manually
+$env:AGENT_ID = "agent-xxxx"  # Replace xxxx with actual ID from output
+
+# Step 3: Verify it's set
+$env:AGENT_ID  # Should show: agent-xxxx
+
+# Step 4: Use in subsequent commands
 python -m agt run "command"
 python -m agt commit "message"
 ```
@@ -196,7 +220,13 @@ python -m agt commit "message"
 **Note**: On Windows, you may need to use `python -m agt` instead of just `agt` if the command is not in PATH. Also, ensure you're in a virtual environment or activate it first:
 
 ```powershell
-.\.venv\Scripts\Activate.ps1  # If using venv
+# Create minimal venv (UV Cache Workflow)
+python -m venv .venv --symlinks
+.\.venv\Scripts\Activate.ps1
+
+# Install with uv (uses global cache, minimal .venv)
+uv pip install -e .  # or: pip install -e .
+
 python -m agt start
 ```
 
@@ -211,7 +241,8 @@ python -m agt start
 
 # Verify worktree creation
 python -m agt start
-# On Windows PowerShell:
+# Extract and set AGENT_ID from output first: $env:AGENT_ID = "agent-xxxx"
+# On Windows PowerShell (direct PowerShell command, not via agt run):
 Get-ChildItem .work\  # or: dir .work\ on Windows
 python -m agt clean
 ```
@@ -252,7 +283,7 @@ cd ../..
 cd .tools
 git pull origin main
 cd agt
-pip install -e . --force-reinstall
+uv pip install -e . --force-reinstall  # or: pip install -e . --force-reinstall
 ```
 
 ### Issue: Repository URL not found
@@ -278,18 +309,39 @@ pip install -e . --force-reinstall
 
 ### Issue: Commit command fails on Windows
 
-**Symptoms**: `error: pathspec 'message' did not match any file(s) known to git`
+**Symptoms**: 
+- `error: pathspec 'message' did not match any file(s) known to git` (quote parsing issue)
+- `nothing to commit, working tree clean` (files not staged or not in worktree)
 
-**Status**: ✅ **Fixed in v0.1.0** - Commit command now uses argument list instead of shell command
+**Status**: 
+- Quote parsing: ✅ **Fixed in v0.1.0** - Commit command now uses argument list instead of shell command
+- File staging: The `commit` command runs `git add -A` automatically, but ensure files are created in the worktree directory
 
-**Solution**: Update to the latest version:
+**Solutions**:
 
-```bash
-cd .tools
-git pull origin main
-cd agt
-pip install -e . --force-reinstall
-```
+1. **Ensure files are in worktree directory**:
+   ```powershell
+   # Files created via agt run should be in .work/agent-xxxx/
+   python -m agt run "echo test > file.txt"
+   # Verify file exists in worktree
+   python -m agt run "dir"
+   ```
+
+2. **Update to latest version** (if quote parsing issue):
+   ```bash
+   cd .tools
+   git pull origin main
+   cd agt
+   pip install -e . --force-reinstall
+   ```
+
+3. **Manual commit** (if automatic staging fails):
+   ```powershell
+   cd .work/agent-xxxx  # Replace xxxx with your AGENT_ID
+   git add -A
+   git commit -m "your message"
+   cd ../..
+   ```
 
 ### Issue: Unicode encoding errors (Windows)
 
@@ -458,8 +510,7 @@ After updating the submodule, you may need to reinstall the package:
 ```bash
 # Reinstall the package (recommended after update)
 cd .tools/agt
-pip install -e . --force-reinstall
-# or: uv pip install -e . --force-reinstall
+uv pip install -e . --force-reinstall  # or: pip install -e . --force-reinstall
 cd ../..
 ```
 
@@ -475,7 +526,7 @@ git commit -m "chore: update agent-tools submodule"
 
 # Reinstall (if needed)
 cd .tools/agt
-pip install -e . --force-reinstall
+uv pip install -e . --force-reinstall  # or: pip install -e . --force-reinstall
 cd ../..
 ```
 
@@ -544,7 +595,7 @@ git worktree list
 # Remove each one
 git worktree remove .work/agent-xxxx --force
 
-# Or remove all at once (PowerShell)
+# Or remove all at once (PowerShell - direct command, not via agt run)
 Get-ChildItem .work\ | ForEach-Object { git worktree remove $_.FullName --force }
 ```
 
@@ -564,7 +615,7 @@ After successful testing:
 
 - [ ] Prerequisites verified (Python 3.11+, Git with worktree)
 - [ ] Submodule added successfully
-- [ ] Installation completed (`pip install -e .`)
+- [ ] Installation completed (`uv pip install -e .` or `pip install -e .`)
 - [ ] `python -m agt start` works (or `agt start` if in PATH)
 - [ ] `python -m agt run` executes commands (use Windows-compatible commands)
 - [ ] `python -m agt commit` creates commits
@@ -609,7 +660,7 @@ $REPO_URL = "https://github.com/tnedr/agent-ops"
 git submodule add -b main $REPO_URL .tools
 git submodule update --init --recursive
 cd .tools/agt
-pip install -e .  # or: uv pip install -e .
+uv pip install -e .  # or: pip install -e .
 cd ../..
 
 # Activate virtual environment if using one
@@ -619,11 +670,14 @@ cd ../..
 python -m agt start
 # Note AGENT_ID from output (e.g., AGENT_ID=agent-xxxx)
 
-# Create test file (use PowerShell-compatible commands)
-python -m agt run "Set-Content -Path test.txt -Value 'Agent tools test'"
+# Set AGENT_ID from output
+$env:AGENT_ID = "agent-xxxx"  # Replace xxxx with actual ID from start output
+
+# Create test file (use cmd.exe-compatible commands, not PowerShell cmdlets)
+python -m agt run "echo Agent tools test > test.txt"
 
 # View file
-python -m agt run "Get-Content test.txt"
+python -m agt run "type test.txt"
 
 # Commit
 python -m agt commit "test: complete workflow test"

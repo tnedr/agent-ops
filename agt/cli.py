@@ -4,12 +4,15 @@ import os
 import subprocess
 import sys
 from pathlib import Path
+from typing import Optional
 
 from agt.worktree import (
     add_worktree,
     generate_agent_id,
+    get_current_agent_id,
     get_repo_root,
     get_worktree_path,
+    list_worktrees,
     remove_worktree,
 )
 
@@ -34,25 +37,38 @@ def err(msg: str) -> None:
 
 def cmd_start(base_branch: str = "main") -> None:
     """Start a new agent worktree."""
-    root = get_repo_root()
+    root = get_repo_root(Path.cwd())
     agent_id = generate_agent_id()
     
-    # Store in environment for subsequent commands
-    os.environ["AGENT_ID"] = agent_id
-    
     worktree_path, branch_name = add_worktree(root, agent_id, base_branch)
+    
+    # Note: No need to store agent ID - detection is based on working directory
+    # This allows multiple concurrent agents to work independently
     
     safe_print(f"✅ Worktree ready: {worktree_path} (branch {branch_name})")
     print(f"AGENT_ID={agent_id}")
 
 
-def cmd_run(command: list[str]) -> None:
+def cmd_run(command: list[str], agent_id: Optional[str] = None) -> None:
     """Run a command in the agent worktree."""
-    agent_id = os.environ.get("AGENT_ID")
-    if not agent_id:
-        err("Run 'agt start' first!")
+    root = get_repo_root(Path.cwd())
     
-    root = get_repo_root()
+    # Get agent ID from argument, working directory, env var (legacy), or auto-detect
+    if not agent_id:
+        agent_id = get_current_agent_id(root, cwd=Path.cwd())
+    
+    if not agent_id:
+        worktrees = list_worktrees(root)
+        if not worktrees:
+            err("No worktrees found. Run 'agt start' first!")
+        else:
+            err(
+                f"Multiple worktrees found: {', '.join(worktrees)}\n"
+                f"Either:\n"
+                f"  - Run command from within worktree directory: cd .work/agent-xxxx\n"
+                f"  - Specify agent ID: agt run --agent <id> <command>"
+            )
+    
     worktree_path = get_worktree_path(root, agent_id)
     
     if not worktree_path.exists():
@@ -71,13 +87,26 @@ def cmd_run(command: list[str]) -> None:
         sys.exit(e.returncode)
 
 
-def cmd_commit(message: str) -> None:
+def cmd_commit(message: str, agent_id: Optional[str] = None) -> None:
     """Commit changes in the agent worktree."""
-    agent_id = os.environ.get("AGENT_ID")
-    if not agent_id:
-        err("Run 'agt start' first!")
+    root = get_repo_root(Path.cwd())
     
-    root = get_repo_root()
+    # Get agent ID from argument, working directory, env var (legacy), or auto-detect
+    if not agent_id:
+        agent_id = get_current_agent_id(root, cwd=Path.cwd())
+    
+    if not agent_id:
+        worktrees = list_worktrees(root)
+        if not worktrees:
+            err("No worktrees found. Run 'agt start' first!")
+        else:
+            err(
+                f"Multiple worktrees found: {', '.join(worktrees)}\n"
+                f"Either:\n"
+                f"  - Run command from within worktree directory: cd .work/agent-xxxx\n"
+                f"  - Specify agent ID: agt commit --agent <id> <message>"
+            )
+    
     worktree_path = get_worktree_path(root, agent_id)
     
     if not worktree_path.exists():
@@ -96,13 +125,26 @@ def cmd_commit(message: str) -> None:
     safe_print("✅ Commit ready")
 
 
-def cmd_push(remote: str = "origin") -> None:
+def cmd_push(remote: str = "origin", agent_id: Optional[str] = None) -> None:
     """Push the agent branch to remote."""
-    agent_id = os.environ.get("AGENT_ID")
-    if not agent_id:
-        err("Run 'agt start' first!")
+    root = get_repo_root(Path.cwd())
     
-    root = get_repo_root()
+    # Get agent ID from argument, working directory, env var (legacy), or auto-detect
+    if not agent_id:
+        agent_id = get_current_agent_id(root, cwd=Path.cwd())
+    
+    if not agent_id:
+        worktrees = list_worktrees(root)
+        if not worktrees:
+            err("No worktrees found. Run 'agt start' first!")
+        else:
+            err(
+                f"Multiple worktrees found: {', '.join(worktrees)}\n"
+                f"Either:\n"
+                f"  - Run command from within worktree directory: cd .work/agent-xxxx\n"
+                f"  - Specify agent ID: agt push --agent <id> [remote]"
+            )
+    
     worktree_path = get_worktree_path(root, agent_id)
     
     if not worktree_path.exists():
@@ -119,13 +161,26 @@ def cmd_push(remote: str = "origin") -> None:
     safe_print("🚀 Pushed to remote; open a PR in the UI if needed")
 
 
-def cmd_merge() -> None:
+def cmd_merge(agent_id: Optional[str] = None) -> None:
     """Merge agent branch into main (fast-forward only)."""
-    agent_id = os.environ.get("AGENT_ID")
-    if not agent_id:
-        err("Run 'agt start' first!")
+    root = get_repo_root(Path.cwd())
     
-    root = get_repo_root()
+    # Get agent ID from argument, working directory, env var (legacy), or auto-detect
+    if not agent_id:
+        agent_id = get_current_agent_id(root, cwd=Path.cwd())
+    
+    if not agent_id:
+        worktrees = list_worktrees(root)
+        if not worktrees:
+            err("No worktrees found. Run 'agt start' first!")
+        else:
+            err(
+                f"Multiple worktrees found: {', '.join(worktrees)}\n"
+                f"Either:\n"
+                f"  - Run command from within worktree directory: cd .work/agent-xxxx\n"
+                f"  - Specify agent ID: agt merge --agent <id>"
+            )
+    
     worktree_path = get_worktree_path(root, agent_id)
     
     if not worktree_path.exists():
@@ -156,13 +211,26 @@ def cmd_merge() -> None:
     safe_print("✅ Branch fast-forwarded to main")
 
 
-def cmd_clean() -> None:
+def cmd_clean(agent_id: Optional[str] = None) -> None:
     """Remove the agent worktree."""
-    agent_id = os.environ.get("AGENT_ID")
-    if not agent_id:
-        err("Run 'agt start' first!")
+    root = get_repo_root(Path.cwd())
     
-    root = get_repo_root()
+    # Get agent ID from argument, working directory, env var (legacy), or auto-detect
+    if not agent_id:
+        agent_id = get_current_agent_id(root, cwd=Path.cwd())
+    
+    if not agent_id:
+        worktrees = list_worktrees(root)
+        if not worktrees:
+            err("No worktrees found. Nothing to clean.")
+        else:
+            err(
+                f"Multiple worktrees found: {', '.join(worktrees)}\n"
+                f"Either:\n"
+                f"  - Run command from within worktree directory: cd .work/agent-xxxx\n"
+                f"  - Specify agent ID: agt clean --agent <id>"
+            )
+    
     worktree_path = get_worktree_path(root, agent_id)
     
     if not worktree_path.exists():
@@ -181,6 +249,16 @@ def main() -> None:
     cmd = sys.argv[1]
     args = sys.argv[2:]
     
+    # Parse --agent flag if present (must be before command-specific args)
+    agent_id: Optional[str] = None
+    if "--agent" in args:
+        idx = args.index("--agent")
+        if idx + 1 >= len(args):
+            err("--agent requires an agent ID")
+        agent_id = args[idx + 1]
+        # Remove --agent and its value from args
+        args = args[:idx] + args[idx + 2:]
+    
     if cmd == "start":
         base_branch = args[0] if args else "main"
         cmd_start(base_branch)
@@ -188,23 +266,23 @@ def main() -> None:
     elif cmd == "run":
         if not args:
             err("Missing command to run")
-        cmd_run(args)
+        cmd_run(args, agent_id=agent_id)
     
     elif cmd == "commit":
         if not args:
-            err('Usage: agt commit "<message>"')
+            err('Usage: agt commit [--agent <id>] "<message>"')
         message = args[0]
-        cmd_commit(message)
+        cmd_commit(message, agent_id=agent_id)
     
     elif cmd == "push":
         remote = args[0] if args else "origin"
-        cmd_push(remote)
+        cmd_push(remote, agent_id=agent_id)
     
     elif cmd == "merge":
-        cmd_merge()
+        cmd_merge(agent_id=agent_id)
     
     elif cmd == "clean":
-        cmd_clean()
+        cmd_clean(agent_id=agent_id)
     
     else:
         err(f"Unknown subcommand: {cmd}")

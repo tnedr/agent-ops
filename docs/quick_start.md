@@ -7,15 +7,17 @@
 ```bash
 git clone https://github.com/tnedr/agent-ops
 cd agent-ops/agt
-pip install -e .
+uv pip install -e .  # or: pip install -e .
 ```
+
+**Note**: This project follows UV Cache Workflow Guidelines. If using `uv`, packages are cached globally (e.g., `E:\uv-cache`), keeping `.venv` minimal.
 
 ### Option 2: As submodule
 
 ```bash
 git submodule add -b main https://github.com/tnedr/agent-ops .tools
 cd .tools/agt
-pip install -e .
+uv pip install -e .  # or: pip install -e .
 ```
 
 ### Option 3: Via pipx (when published to PyPI)
