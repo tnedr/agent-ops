@@ -21,12 +21,12 @@ Worktree-based agent workflow management toolkit.
 
 ```bash
 # From source
-git clone https://github.com/<ORG>/agent-tools
-cd agent-tools/agt
+git clone https://github.com/tnedr/agent-ops
+cd agent-ops/agt
 pip install -e .
 
 # Or as submodule
-git submodule add -b main https://github.com/<ORG>/agent-tools .tools
+git submodule add -b main https://github.com/tnedr/agent-ops .tools
 cd .tools/agt
 pip install -e .
 ```
@@ -77,7 +77,6 @@ agent-tools/
 ├── examples/            # Usage examples
 ├── .github/
 │   └── workflows/       # CI/CD workflows
-└── pyproject.toml        # Root workspace configuration
 ```
 
 ## Development
@@ -131,7 +130,7 @@ See the [docs/](docs/) directory for detailed documentation:
 ### As Git Submodule (Recommended)
 
 ```bash
-git submodule add -b main https://github.com/<ORG>/agent-tools .tools
+git submodule add -b main https://github.com/tnedr/agent-ops .tools
 cd .tools/agt
 pip install -e .
 ```
@@ -147,8 +146,8 @@ pipx install agent-tools
 ### From Source
 
 ```bash
-git clone https://github.com/<ORG>/agent-tools
-cd agent-tools/agt
+git clone https://github.com/tnedr/agent-ops
+cd agent-ops/agt
 pip install -e .
 ```
 
@@ -158,11 +157,27 @@ This project uses semantic versioning. To use a specific version:
 
 ```bash
 # Git submodule
-git submodule add -b v0.1.0 https://github.com/<ORG>/agent-tools .tools
+git submodule add -b v0.1.0 https://github.com/tnedr/agent-ops .tools
 
 # PyPI (when published)
 pip install agent-tools==0.1.0
 ```
+
+## Testing in Another Project
+
+Want to try it out? See [Try It Out Guide](docs/TRY_IT_OUT.md) for a quick 5-minute test in any repository.
+
+```bash
+# Quick test
+git submodule add -b main https://github.com/tnedr/agent-ops .tools
+cd .tools/agt && pip install -e . && cd ../..
+agt start
+agt run "echo 'test' > test.txt"
+agt commit "test: verify agent-tools"
+agt push
+```
+
+See [Try It Out Guide](docs/TRY_IT_OUT.md) for detailed troubleshooting and Windows PowerShell instructions.
 
 ## Contributing
 

@@ -5,15 +5,15 @@
 ### Option 1: From source (development)
 
 ```bash
-git clone https://github.com/<ORG>/agent-tools
-cd agent-tools/agt
+git clone https://github.com/tnedr/agent-ops
+cd agent-ops/agt
 pip install -e .
 ```
 
 ### Option 2: As submodule
 
 ```bash
-git submodule add -b main https://github.com/<ORG>/agent-tools .tools
+git submodule add -b main https://github.com/tnedr/agent-ops .tools
 cd .tools/agt
 pip install -e .
 ```

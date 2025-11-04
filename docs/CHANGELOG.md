@@ -30,6 +30,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Cross-platform support (Windows, Linux, macOS)
 - Local CLI-only workflow (no PR-bot dependencies)
 - Manual PR creation workflow
+- Windows compatibility fixes (Unicode fallback, commit command)
+
+### Fixed
+
+- **Windows compatibility**: Commit command now uses argument list instead of shell command (fixes quote parsing issues)
+- **Unicode encoding**: Automatic fallback to ASCII-safe characters on Windows terminals
+- **Package structure**: Fixed hatchling build configuration for flat package structure
 
 ### Testing
 
