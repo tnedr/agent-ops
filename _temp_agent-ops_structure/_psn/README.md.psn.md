@@ -1,3 +1,9 @@
+# === FILE: README.md ===
+# Path: README.md
+# Type: md
+# Size: 2.4KB
+# Modified: 2025-11-04T14:51:15.538346
+
 # agent-ops
 
 Modular PR-bot and Agent/Doc-Ops GitHub Actions repository.
@@ -49,30 +55,14 @@ jobs:
 **From the same repository (local path):**
 
 ```yaml
-name: Auto-merge PR
-
-on:
-  pull_request:
-    types: [opened, synchronize, reopened, ready_for_review, labeled]
-
-jobs:
-  merge:
-    # Only run if PR has 'automerge' label - prevents infinite loops
-    if: contains(github.event.pull_request.labels.*.name, 'automerge')
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      
-      - name: Auto-merge with PR-bot
-        uses: ./actions/pr-bot
-        with:
-          ci: "false"
-          force: "false"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+- name: Auto-merge with PR-bot
+  uses: ./actions/pr-bot
+  with:
+    ci: "false"
+    force: "false"
+  env:
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
-
-**Note:** The workflow requires an `automerge` label on the PR to prevent infinite loops when the bot merges PRs.
 
 **Configuration:**
 
@@ -104,21 +94,3 @@ This project follows UV Cache Workflow Guidelines:
 
 ```bash
 # Install dependencies
-uv pip install -e .
-```
-
-### Structure
-
-```
-agent-ops/
-├── actions/
-│   └── pr-bot/          # PR automation action
-├── .github/
-│   └── workflows/       # GitHub workflows
-└── pyproject.toml       # Root workspace configuration
-```
-
-## License
-
-MIT
-

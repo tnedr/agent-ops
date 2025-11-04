@@ -1,3 +1,9 @@
+# === FILE: USAGE.md ===
+# Path: USAGE.md
+# Type: md
+# Size: 3.3KB
+# Modified: 2025-11-04T14:51:15.538346
+
 # Using agent-ops Actions in Other Repositories
 
 ## Quick Start
@@ -9,12 +15,10 @@ name: Auto-merge PR
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened, ready_for_review, labeled]
+    types: [opened, synchronize, reopened, ready_for_review]
 
 jobs:
   merge:
-    # Only run if PR has 'automerge' label - prevents infinite loops
-    if: contains(github.event.pull_request.labels.*.name, 'automerge')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -27,8 +31,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
-
-**Important:** The workflow requires an `automerge` label on the PR. This prevents infinite loops when the bot merges PRs.
 
 ## Configuration Options
 
@@ -94,9 +96,7 @@ Then use `@v1` in your workflow for stability.
 
 3. Create a PR on GitHub
 
-4. **Add the `automerge` label** to the PR (required to trigger the bot)
-
-5. The bot should automatically merge it after 5 seconds (if `ci: "false"`)
+4. The bot should automatically merge it after 5 seconds (if `ci: "false"`)
 
 ### Test in agent-ops Repository
 
@@ -105,39 +105,3 @@ The `agent-ops` repository has its own test workflow (`.github/workflows/test-pr
 ## How It Works
 
 1. **PR Created**: When a PR is opened/updated
-2. **Workflow Triggered**: The GitHub Action workflow starts
-3. **Bot Runs**: The PR bot checks the PR status
-4. **Wait Period**: Default 5 seconds (configurable via `--wait`)
-5. **CI Check** (optional): If `ci: "true"`, waits for all checks to pass
-6. **Merge**: Squash merges the PR
-7. **Cleanup**: Deletes the source branch
-
-## Permissions
-
-The action requires the `GITHUB_TOKEN` secret, which is automatically available in GitHub Actions. Make sure your repository has the following permissions:
-
-- **Contents**: Write (to merge PRs)
-- **Pull requests**: Write (to merge and delete branches)
-
-These are usually set automatically, but you can check in:
-- Repository Settings → Actions → General → Workflow permissions
-
-## Troubleshooting
-
-### Bot Not Merging
-
-1. Check workflow permissions
-2. Verify `GITHUB_TOKEN` is set
-3. Check workflow logs for errors
-4. Ensure PR is not in draft mode
-
-### CI Checks Not Passing
-
-- If `ci: "true"`, the bot waits for all checks
-- If checks fail, set `force: "true"` to override (requires admin permissions)
-
-### Permission Errors
-
-- Ensure the `GITHUB_TOKEN` has write permissions
-- Check repository settings for workflow permissions
-

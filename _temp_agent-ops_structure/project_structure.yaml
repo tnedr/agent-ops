@@ -1,0 +1,16 @@
+## Project Root
+- .github:
+  - workflows:
+    - pull_request.yml
+    - test-pr-bot.yml
+- .gitignore
+- README.md
+- USAGE.md
+- actions:
+  - pr-bot:
+    - Dockerfile
+    - action.yml
+    - entrypoint.sh
+    - pr_bot.py
+    - pyproject.toml
+- pyproject.toml

@@ -1,13 +1,17 @@
+# === FILE: .github\workflows\pull_request.yml ===
+# Path: .github\workflows\pull_request.yml
+# Type: yml
+# Size: 580.0B
+# Modified: 2025-11-04T13:36:47.203918
+
 name: PR Pipeline (only bot demo)
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened, ready_for_review, labeled]
+    types: [opened, synchronize, reopened, ready_for_review]
 
 jobs:
   merge-gate:
-    # Only run if PR has 'automerge' label - prevents infinite loops
-    if: contains(github.event.pull_request.labels.*.name, 'automerge')
     runs-on: ubuntu-latest
     # nincsenek needs -> közvetlenül fut
     steps:
@@ -20,4 +24,3 @@ jobs:
           force: "false"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-

@@ -1,0 +1,83 @@
+{
+  "generated": "2025-11-04T13:58:53.461778+00:00",
+  "root": "E:\\Repos\\agent-ops",
+  "files": [
+    {
+      "path": ".github\\workflows\\pull_request.yml",
+      "size": 580,
+      "tokens": 388,
+      "sha256": "0317cd6ef9d06cec4bbe2ed24abcb2c285d011fe780321b1af420eac2c325863",
+      "truncated": false
+    },
+    {
+      "path": ".github\\workflows\\test-pr-bot.yml",
+      "size": 518,
+      "tokens": 388,
+      "sha256": "01b632d57266872c602a28eaac1757fc727e3b8fec7d7c0baaa7097cf93119ec",
+      "truncated": false
+    },
+    {
+      "path": "actions\\pr-bot\\action.yml",
+      "size": 471,
+      "tokens": 388,
+      "sha256": "631e3a7b4daf5a899a8081f129d18f93f5231b8634a05a2df54cec966f6a6696",
+      "truncated": false
+    },
+    {
+      "path": ".gitignore",
+      "size": 261,
+      "tokens": 358,
+      "sha256": "5fadeb0aad6b0b72bc3582bc91ad9245947ab9062b65213fa9448f4d04f2fae4",
+      "truncated": false
+    },
+    {
+      "path": "actions\\pr-bot\\Dockerfile",
+      "size": 1172,
+      "tokens": 358,
+      "sha256": "20440eb0f4e43c73ace94f640b4df1c0ad1aad45164095fcf854de99bfe6dd2e",
+      "truncated": false
+    },
+    {
+      "path": "actions\\pr-bot\\entrypoint.sh",
+      "size": 270,
+      "tokens": 67,
+      "sha256": "45138edf343442f629e4a8805410a5b70b3609a085f02195c31cc53c91613e5f",
+      "truncated": false
+    },
+    {
+      "path": "actions\\pr-bot\\pr_bot.py",
+      "size": 10423,
+      "tokens": 2572,
+      "sha256": "3935d00143318b55c18b53d75c808436c09842e94d8962eb5e62a51bc7b94df7",
+      "truncated": false
+    },
+    {
+      "path": "actions\\pr-bot\\pyproject.toml",
+      "size": 294,
+      "tokens": 139,
+      "sha256": "9f75d115a94e6b0779c9f192ac666b8441cc171ab38dc390ffe10ee0d2248fbb",
+      "truncated": false
+    },
+    {
+      "path": "pyproject.toml",
+      "size": 264,
+      "tokens": 139,
+      "sha256": "d42861857a162750aec9dfd09d437699e3be4abca09b5fe3092c35fe3c2d2247",
+      "truncated": false
+    },
+    {
+      "path": "README.md",
+      "size": 2424,
+      "tokens": 1428,
+      "sha256": "059e2ca62c52db60c1dff7549e4c7297123f218e8e31bc9301de2f94958f0c85",
+      "truncated": false
+    },
+    {
+      "path": "USAGE.md",
+      "size": 3334,
+      "tokens": 1428,
+      "sha256": "0c10973611a8a4cbbdf2da1fdee20f8377d93a74b06f4e6a2b8cffa395e5c60d",
+      "truncated": false
+    }
+  ]
+}
