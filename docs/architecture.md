@@ -24,7 +24,7 @@ Low-level Git worktree operations:
 - `generate_agent_id()`: Generate unique agent IDs
 - `add_worktree()`: Create new worktree and branch
 - `remove_worktree()`: Clean up worktree
-- `find_pr_bot()`: Locate `pr_bot.py` script
+- `get_worktree_path()`: Get worktree path for agent ID
 
 ### `agt.cli`
 
@@ -32,7 +32,9 @@ Command-line interface:
 
 - `cmd_start()`: Initialize agent worktree
 - `cmd_run()`: Execute commands in worktree
-- `cmd_finish()`: Complete workflow with PR creation and merge
+- `cmd_commit()`: Commit changes in worktree
+- `cmd_push()`: Push branch to remote
+- `cmd_clean()`: Remove worktree
 
 ## Workflow
 
@@ -76,7 +78,6 @@ Uses Git's native worktree feature:
 
 1. **Submodule**: Clone as Git submodule
 2. **PyPI**: Install via `pip install agent-tools` (when published)
-3. **GitHub Action**: Use composite action in CI/CD
 
 ### Entry Points
 

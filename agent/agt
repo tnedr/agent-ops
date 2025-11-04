@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+# Simplified agent command helper: start | run | finish
+
+set -euo pipefail
+
+ROOT=$(git rev-parse --show-toplevel)
+PR_BOT="$ROOT/actions/pr-bot/pr_bot.py"
+WORK_DIR="$ROOT/.work"
+
+uuid() { python - <<'PY'; import uuid, sys; print(uuid.uuid4().hex[:8]); PY; }
+err()  { echo "❌ $*" >&2; exit 1; }
+
+[[ $# -gt 0 ]] || { echo "Usage: agt <start|run|finish>"; exit 1; }
+cmd=$1; shift
+
+case "$cmd" in
+  start)
+    export AGENT_ID="agent-$(uuid)"
+    BRANCH="feat/$AGENT_ID"
+    WT="$WORK_DIR/$AGENT_ID"
+    git worktree add "$WT" -b "$BRANCH" main
+    echo "✅ Worktree ready: $WT (branch $BRANCH)"
+    ;;
+
+  run)
+    [[ -z ${AGENT_ID:-} ]] && err "Run 'agt start' first!"
+    WT="$WORK_DIR/$AGENT_ID"
+    [[ $# -gt 0 ]] || err "Missing command to run"
+    ( cd "$WT" && eval "$*" )
+    ;;
+
+  finish)
+    [[ -z ${AGENT_ID:-} ]] && err "Run 'agt start' first!"
+    WT="$WORK_DIR/$AGENT_ID"
+    [[ $# -lt 2 ]] && err "Usage: agt finish \"<msg>\" \"<title>\" [--ci]"
+    MSG=$1; TITLE=$2; shift 2
+    ( cd "$WT" && python "$PR_BOT" --message "$MSG" --title "$TITLE" "$@" )
+    git worktree remove "$WT"
+    echo "✅ Merged & cleaned ($AGENT_ID)"
+    ;;
+
+  *)
+    err "Unknown subcommand: $cmd"
+    ;;
+esac
+
