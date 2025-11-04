@@ -263,58 +263,71 @@ uses: tnedr/agent-ops/actions/pr-bot@main
 
 ---
 
-## Konkrét Példa: Agent Kód
+## Konkrét Példa: Agent Kód (Teljes Flow)
 
 ### Mit kell az agentnek csinálnia?
 
+**FONTOS:** Az agent először dolgozik (branch, commit, PR), UTÁNNA triggereli a GitHub Action-t!
+
 ```python
-# 1. WORKFLOW FÁJL LÉTREHOZÁSA (egyszer, vagy ha még nincs)
-
-workflow_content = """name: Auto-merge PR
-
+# 1. WORKFLOW FÁJL LÉTREHOZÁSA (csak első alkalommal, ha még nincs)
+if not workflow_exists():
+    workflow_content = """name: Auto-merge PR
 on:
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review, labeled]
-
 jobs:
   merge:
     if: contains(github.event.pull_request.labels.*.name, 'automerge')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
-      - name: Auto-merge with PR-bot
-        uses: tnedr/agent-ops/actions/pr-bot@main
+      - uses: tnedr/agent-ops/actions/pr-bot@main
         with:
           ci: "false"
-          force: "false"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 """
+    write_file(".github/workflows/auto-merge.yml", workflow_content)
+    git_add(".github/workflows/auto-merge.yml")
+    git_commit("feat: add PR bot auto-merge workflow")
+    git_push()
 
-# Létrehozás
-write_file(".github/workflows/auto-merge.yml", workflow_content)
+# 2. BRANCH LÉTREHOZÁSA (minden feladathoz)
+branch_name = f"feat/agent-{int(time.time())}"  # pl. "feat/agent-1234567890"
+git_checkout_new_branch(branch_name)
 
-# Commit
-git_add(".github/workflows/auto-merge.yml")
-git_commit("feat: add PR bot auto-merge workflow")
-git_push()
+# 3. VÁLTOZÁSOK ELKÉSZÍTÉSE (agent dolga)
+write_file("src/main.py", new_code)  # Agent módosít fájlokat
+git_add("src/main.py")
 
-# 2. PR LÉTREHOZÁSA (ha még nincs)
+# 4. COMMIT
+git_commit("fix: resolve bug in main.py")
 
+# 5. PUSH
+git_push(branch_name, set_upstream=True)
+
+# 6. PR LÉTREHOZÁSA
 pr_number = create_pr(
     title="Fix bug",
     body="This fixes the issue",
-    branch="fix/bug-123",
-    base="main"
+    head=branch_name,  # Az agent branch-je
+    base="main"       # Target branch
 )
 
-# 3. AUTOMERGE LABEL Hozzáadása (ez triggereli!)
-
+# 7. AUTOMERGE LABEL Hozzáadása (ez triggereli a GitHub Action-t!)
 add_label_to_pr(pr_number, "automerge")
 
 # Kész! A GitHub automatikusan futtatja a workflow-t
+# → 5 másodperc múlva merge-elődik
 ```
+
+**Lépések sorrendje:**
+1. Branch létrehozása
+2. Változások (commit)
+3. Push
+4. PR létrehozása
+5. **Label hozzáadása** → Ez triggereli a GitHub Action-t!
 
 ---
 
