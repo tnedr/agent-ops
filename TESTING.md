@@ -1,5 +1,66 @@
 # Testing PR Bot in Another Repository
 
+## How It Works - Trigger Mechanism
+
+### What Triggers the Workflow?
+
+The workflow is triggered by **Pull Request events** with the `automerge` label:
+
+```yaml
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review, labeled]
+```
+
+**Trigger Events:**
+- `opened` - When a PR is first created
+- `synchronize` - When new commits are pushed to the PR branch
+- `reopened` - When a closed PR is reopened
+- `ready_for_review` - When a draft PR is marked as ready
+- `labeled` - When a label is added to the PR (**this is crucial!**)
+
+### Condition Check
+
+The workflow **only runs** if the PR has the `automerge` label:
+
+```yaml
+jobs:
+  merge:
+    if: contains(github.event.pull_request.labels.*.name, 'automerge')
+```
+
+**This means:**
+- ✅ PR created + `automerge` label added → Workflow runs
+- ✅ Label added to existing PR → Workflow runs (thanks to `labeled` event)
+- ❌ PR created without label → Workflow does NOT run
+- ❌ PR updated without label → Workflow does NOT run
+
+### Syntax Breakdown
+
+**Action Reference:**
+```yaml
+uses: tnedr/agent-ops/actions/pr-bot@main
+```
+
+- `tnedr/agent-ops` - GitHub repository (owner/repo)
+- `actions/pr-bot` - Path to the action directory
+- `@main` - Git reference (branch, tag, or commit SHA)
+
+**Input Parameters:**
+```yaml
+with:
+  ci: "false"    # String: "true" or "false"
+  force: "false" # String: "true" or "false"
+```
+
+**Environment Variables:**
+```yaml
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+The `GITHUB_TOKEN` is automatically provided by GitHub Actions - no need to create it manually.
+
 ## Quick Test Steps
 
 ### 1. Copy the Workflow
@@ -63,14 +124,28 @@ git push -u origin test/pr-bot
 1. Go to your repository on GitHub
 2. You should see a banner suggesting to create a PR
 3. Click "Compare & pull request"
-4. **IMPORTANT: Add the `automerge` label** to the PR
-5. Click "Create pull request"
+4. Click "Create pull request" (you can add the label now or later)
+5. **IMPORTANT: After creating the PR, add the `automerge` label**
+   - Go to the PR page
+   - Click on "Labels" in the right sidebar
+   - Type `automerge` and select it
+   - **OR** use the GitHub CLI: `gh pr edit <PR-number> --add-label automerge`
+
+**Why add label after?** The `labeled` event type ensures the workflow runs when you add the label, even if the PR was created without it.
 
 ### 5. Watch It Work
 
-- The workflow will start running (check the "Actions" tab)
+- **Immediately after adding the `automerge` label**: The workflow will start running
+- Check the "Actions" tab - you should see "Auto-merge PR" workflow running
 - After 5 seconds, the bot should automatically merge the PR
 - The branch will be deleted automatically
+
+**Timeline:**
+1. Label added → `labeled` event triggers workflow
+2. Workflow starts → Condition check passes (has `automerge` label)
+3. Bot runs → Waits 5 seconds (default)
+4. Bot merges → Squash merge + delete branch
+5. Done → PR is merged, branch deleted
 
 ## Verification
 
@@ -93,9 +168,32 @@ git push -u origin test/pr-bot
 
 ### Workflow Not Running
 
-- **Check**: Did you add the `automerge` label? (Required!)
-- **Check**: Is the workflow file in `.github/workflows/` directory?
-- **Check**: Is the workflow file named correctly (`.yml` or `.yaml`)?
+**Check these in order:**
+
+1. **Label added?** 
+   - The `automerge` label MUST be present on the PR
+   - Check PR labels on the PR page
+   - If missing, add it manually
+
+2. **Workflow file location?**
+   - Must be in `.github/workflows/` directory
+   - File name must end with `.yml` or `.yaml`
+   - Example: `.github/workflows/auto-merge.yml`
+
+3. **Workflow syntax correct?**
+   - Check YAML indentation (2 spaces, not tabs)
+   - Verify `uses:` line points to correct repo: `tnedr/agent-ops/actions/pr-bot@main`
+   - Ensure `on:` section includes `labeled` event type
+
+4. **Branch protection?**
+   - Check if main branch has protection rules
+   - The bot needs write permissions to merge
+
+5. **Check Actions tab:**
+   - Go to repository → Actions tab
+   - Look for "Auto-merge PR" workflow
+   - Check if it shows as "skipped" (means condition failed)
+   - Check if it shows errors
 
 ### Bot Not Merging
 
