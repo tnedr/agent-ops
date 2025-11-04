@@ -1,0 +1,25 @@
+# Copy this file to your repository as: .github/workflows/auto-merge.yml
+# Then add the 'automerge' label to any PR you want to auto-merge
+
+name: Auto-merge PR
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review, labeled]
+
+jobs:
+  merge:
+    # Only run if PR has 'automerge' label - prevents infinite loops
+    if: contains(github.event.pull_request.labels.*.name, 'automerge')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Auto-merge with PR-bot
+        uses: tnedr/agent-ops/actions/pr-bot@main
+        with:
+          ci: "false"    # Set to "true" to wait for CI checks
+          force: "false" # Set to "true" to merge even with failed checks
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
