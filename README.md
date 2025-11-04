@@ -122,7 +122,7 @@ See the [docs/](docs/) directory for detailed documentation:
 - [Quick Start Guide](docs/quick_start.md) - Get started with agent-tools
 - [CLI Reference](docs/cli_reference.md) - Complete command reference
 - [Architecture](docs/architecture.md) - Architecture overview
-- [Try It Out](docs/TRY_IT_OUT.md) - Test in another project
+- [Worktree Agent User Manual](docs/worktree_agent_user_manual.md) - Complete guide for using agent-tools with multiple concurrent agents
 - [Changelog](docs/CHANGELOG.md) - Version history
 
 **Note:** Legacy documentation files containing PR-bot and GitHub Actions references have been archived in [docs/legacy/](docs/legacy/). These are deprecated and not applicable to the current local CLI-only version.
@@ -169,7 +169,7 @@ uv pip install agent-tools==0.1.0  # or: pip install agent-tools==0.1.0
 
 ## Testing in Another Project
 
-Want to try it out? See [Try It Out Guide](docs/TRY_IT_OUT.md) for a quick 5-minute test in any repository.
+Want to try it out? See [Worktree Agent User Manual](docs/worktree_agent_user_manual.md) for a complete guide including multiple concurrent agents.
 
 ```bash
 # Quick test
@@ -182,7 +182,7 @@ agt commit "test: verify agent-tools"
 agt push
 ```
 
-See [Try It Out Guide](docs/TRY_IT_OUT.md) for detailed troubleshooting and Windows PowerShell instructions.
+See [Worktree Agent User Manual](docs/worktree_agent_user_manual.md) for detailed troubleshooting and Windows PowerShell instructions.
 
 ## Contributing
 

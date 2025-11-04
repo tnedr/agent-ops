@@ -51,22 +51,40 @@ agt run echo "Hello from worktree"
 
 ---
 
-### `agt commit "<message>"`
+### `agt commit [--agent <id>] "<message>"`
 
 Commit changes in the agent worktree.
 
 **Requirements:**
 - Must run `agt start` first
-- `AGENT_ID` environment variable must be set
+- Agent ID must be specified via `--agent` flag, working directory, or environment variable
 
 **Arguments:**
+- `--agent <id>` (optional): Explicitly specify agent ID (required when multiple worktrees exist)
 - `message`: Commit message
+
+**Agent ID Detection** (in priority order):
+1. `--agent` flag (explicit)
+2. Working directory (if inside `.work/agent-xxxx`)
+3. Environment variable `AGENT_ID` (legacy)
+4. Auto-detect (if only one worktree exists)
 
 **Examples:**
 ```bash
+# Using --agent flag (recommended for multiple agents)
+agt commit --agent agent-xxxx "feat: add new feature"
+
+# Working from within worktree directory (auto-detection)
+cd .work/agent-xxxx
 agt commit "feat: add new feature"
-agt commit "fix: bug in calculation"
-agt commit "docs: update README"
+cd ../..
+
+# Legacy: using environment variable (single agent only)
+export AGENT_ID=agent-xxxx
+agt commit "feat: add new feature"
+
+# Single worktree (auto-detection)
+agt commit "feat: add new feature"
 ```
 
 **What it does:**
@@ -76,22 +94,42 @@ agt commit "docs: update README"
 
 ---
 
-### `agt push [remote]`
+### `agt push [--agent <id>] [remote]`
 
 Push the agent branch to remote.
 
 **Requirements:**
 - Must run `agt start` first
 - Must have commits to push (run `agt commit` first)
-- `AGENT_ID` environment variable must be set
+- Agent ID must be specified via `--agent` flag, working directory, or environment variable
 
 **Arguments:**
+- `--agent <id>` (optional): Explicitly specify agent ID (required when multiple worktrees exist)
 - `remote` (optional): Remote name (default: `origin`)
+
+**Agent ID Detection** (in priority order):
+1. `--agent` flag (explicit)
+2. Working directory (if inside `.work/agent-xxxx`)
+3. Environment variable `AGENT_ID` (legacy)
+4. Auto-detect (if only one worktree exists)
 
 **Examples:**
 ```bash
+# Using --agent flag (recommended for multiple agents)
+agt push --agent agent-xxxx
+agt push --agent agent-xxxx origin
+
+# Working from within worktree directory (auto-detection)
+cd .work/agent-xxxx
 agt push
-agt push origin
+cd ../..
+
+# Legacy: using environment variable (single agent only)
+export AGENT_ID=agent-xxxx
+agt push
+
+# Single worktree (auto-detection)
+agt push
 ```
 
 **What it does:**
@@ -125,7 +163,7 @@ agt clean
 
 ---
 
-### `agt merge`
+### `agt merge [--agent <id>]`
 
 Merge agent branch into main using fast-forward merge (local only).
 
@@ -134,10 +172,32 @@ Merge agent branch into main using fast-forward merge (local only).
 - Must have pushed branch (run `agt push` first)
 - Must have write access to `main` branch
 - No branch protection rules (or admin override)
-- `AGENT_ID` environment variable must be set
+- Agent ID must be specified via `--agent` flag, working directory, or environment variable
+
+**Arguments:**
+- `--agent <id>` (optional): Explicitly specify agent ID (required when multiple worktrees exist)
+
+**Agent ID Detection** (in priority order):
+1. `--agent` flag (explicit)
+2. Working directory (if inside `.work/agent-xxxx`)
+3. Environment variable `AGENT_ID` (legacy)
+4. Auto-detect (if only one worktree exists)
 
 **Examples:**
 ```bash
+# Using --agent flag (recommended for multiple agents)
+agt merge --agent agent-xxxx
+
+# Working from within worktree directory (auto-detection)
+cd .work/agent-xxxx
+agt merge
+cd ../..
+
+# Legacy: using environment variable (single agent only)
+export AGENT_ID=agent-xxxx
+agt merge
+
+# Single worktree (auto-detection)
 agt merge
 ```
 

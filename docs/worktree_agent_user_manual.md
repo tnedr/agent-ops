@@ -132,17 +132,29 @@ python -m agt start
 # Output: ✅ Worktree ready: .work/agent-xxxx (branch feat/agent-xxxx)
 #         AGENT_ID=agent-xxxx
 # 
-# IMPORTANT: Extract AGENT_ID from output and set it manually:
-# On Windows PowerShell: $env:AGENT_ID = "agent-xxxx"
-# On Linux/Mac: export AGENT_ID=agent-xxxx
+# Note: AGENT_ID is shown for reference. For multiple agents, use --agent flag
+# or work from within the worktree directory for auto-detection.
 
 # 2. Create/modify files
-# On Windows, use cmd.exe-compatible commands (not PowerShell cmdlets)
+# Option A: Use --agent flag (works from any directory)
+python -m agt run --agent agent-xxxx "echo Hello from agent > output.txt"
+
+# Option B: Work from within worktree directory (auto-detects agent ID)
+cd .work/agent-xxxx
 python -m agt run "echo Hello from agent > output.txt"
-python -m agt run "dir"  # Use dir instead of ls on Windows
+cd ../..
+
+# On Windows, use cmd.exe-compatible commands (not PowerShell cmdlets)
+python -m agt run --agent agent-xxxx "dir"  # Use dir instead of ls on Windows
 
 # 3. Commit changes
+# Option A: Use --agent flag
+python -m agt commit --agent agent-xxxx "feat: add test output"
+
+# Option B: Work from within worktree directory
+cd .work/agent-xxxx
 python -m agt commit "feat: add test output"
+cd ../..
 
 # 4. Push to remote
 # Option A: Use --agent flag
@@ -205,13 +217,19 @@ cd ../..
 
 # Test (use python -m agt on Windows for best compatibility)
 python -m agt start
-# Extract AGENT_ID from output and set it:
-# $env:AGENT_ID = "agent-xxxx"  # Replace xxxx with actual ID
+# Note the AGENT_ID from output (e.g., AGENT_ID=agent-xxxx)
 
-# Use cmd.exe-compatible commands (not PowerShell cmdlets)
+# Use --agent flag or work from within worktree directory
+python -m agt run --agent agent-xxxx "echo test > test.txt"
+python -m agt commit --agent agent-xxxx "test: PowerShell test"
+python -m agt push --agent agent-xxxx
+
+# Or work from within worktree directory (auto-detection)
+cd .work/agent-xxxx
 python -m agt run "echo test > test.txt"
 python -m agt commit "test: PowerShell test"
 python -m agt push
+cd ../..
 ```
 
 ### Windows Command Compatibility
@@ -258,25 +276,38 @@ python -m agt run "Set-Content -Path file.txt -Value 'test'"  # PowerShell cmdle
 - `🚀` → `[PUSHED]`
 - `❌` → `[ERROR]`
 
-### Environment Variables
+### Agent ID Detection
 
-**Important**: `AGENT_ID` is printed in the output but NOT automatically set as an environment variable. You must extract it from the output and set it manually:
+**Multiple Detection Methods** (in priority order):
 
-```powershell
-# Step 1: Start worktree
-python -m agt start
-# Output shows: AGENT_ID=agent-xxxx
+1. **`--agent` flag** (explicit, recommended for multiple agents):
+   ```powershell
+   python -m agt run --agent agent-xxxx "command"
+   python -m agt commit --agent agent-xxxx "message"
+   python -m agt push --agent agent-xxxx
+   python -m agt clean --agent agent-xxxx
+   ```
 
-# Step 2: Extract and set AGENT_ID manually
-$env:AGENT_ID = "agent-xxxx"  # Replace xxxx with actual ID from output
+2. **Working directory** (auto-detection, best for single agent):
+   ```powershell
+   cd .work/agent-xxxx
+   python -m agt run "command"
+   python -m agt commit "message"
+   cd ../..
+   ```
 
-# Step 3: Verify it's set
-$env:AGENT_ID  # Should show: agent-xxxx
+3. **Environment variable** (legacy, single agent only):
+   ```powershell
+   $env:AGENT_ID = "agent-xxxx"  # Legacy support
+   python -m agt run "command"
+   ```
 
-# Step 4: Use in subsequent commands
-python -m agt run "command"
-python -m agt commit "message"
-```
+4. **Auto-detect** (if only one worktree exists):
+   ```powershell
+   python -m agt run "command"  # Works if only one worktree
+   ```
+
+**For Multiple Concurrent Agents**: Use `--agent` flag or work from within worktree directories.
 
 **Note**: On Windows, you may need to use `python -m agt` instead of just `agt` if the command is not in PATH. Also, ensure you're in a virtual environment or activate it first:
 
