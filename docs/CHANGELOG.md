@@ -12,18 +12,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Initial release of agent-tools
 - `agt start` command to create isolated worktrees
 - `agt run` command to execute commands in worktree
-- `agt finish` command to create PR and merge
-- Integration with `pr_bot.py` for PR automation
+- `agt commit` command to commit changes
+- `agt push` command to push branch to remote
+- `agt merge` command for fast-forward merge (optional)
+- `agt clean` command to remove worktree
 - Python package structure with CLI entrypoint
-- Basic documentation (quick start, CLI reference, architecture)
-- Test suite with pytest
-- GitHub Actions workflows for CI/CD
+- Comprehensive test suite (unit, integration, negative tests)
+- 80%+ code coverage requirement in CI
+- GitHub Actions workflows for CI/CD and releases
+- Documentation (quick start, CLI reference, architecture)
 
 ### Features
 
 - Git worktree management
 - Unique agent ID generation
 - Environment variable management
-- PR bot script discovery
 - Cross-platform support (Windows, Linux, macOS)
+- Local CLI-only workflow (no PR-bot dependencies)
+- Manual PR creation workflow
+
+### Testing
+
+- Unit tests for worktree operations and CLI commands
+- Integration tests with temporary Git repositories
+- Negative test cases for error handling
+- Coverage reporting with 80% minimum threshold
+- CI workflow with linting and test automation
 

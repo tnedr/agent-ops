@@ -1,8 +1,10 @@
 # Legacy Documentation
 
-## ⚠️ Deprecated
+## ⚠️ Deprecated - Do Not Use
 
-These documentation files contain references to **PR-bot** and **GitHub Actions** functionality that has been **removed** from the current version of `agent-tools`.
+These documentation files contain references to **PR-bot** and **GitHub Actions** functionality that has been **completely removed** from the current version of `agent-tools`.
+
+**These files are archived for historical reference only. They are NOT applicable to the current version.**
 
 The current version of `agent-tools` focuses on **local CLI workflow** only:
 - `agt start` - Create isolated worktree
