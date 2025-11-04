@@ -1,0 +1,12 @@
+[project]
+name = "pr-bot"
+version = "2.3.0"
+description = "One-shot GitHub PR automator with CI polling"
+requires-python = ">=3.11"
+
+# No external dependencies - uses only Python standard library
+dependencies = []
+
+[tool.uv]
+# This is a standalone action, no workspace needed here
+
