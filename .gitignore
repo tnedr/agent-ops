@@ -26,3 +26,8 @@ Thumbs.db
 # UV cache (optional - usually shared globally)
 # E:\uv-cache/
 
+# Temp files and exports
+_temp_*/
+*.psn.md
+export_*.json
+
