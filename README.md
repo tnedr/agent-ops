@@ -113,10 +113,60 @@ uv pip install -e .
 agent-ops/
 ├── actions/
 │   └── pr-bot/          # PR automation action
+├── agt/                 # Agent tools Python package
+│   ├── __init__.py
+│   ├── cli.py           # CLI commands (start, run, finish)
+│   ├── worktree.py      # Git worktree management
+│   └── pyproject.toml
+├── bin/
+│   └── agt              # Standalone entrypoint script
+├── docs/                 # Documentation
+│   ├── quick_start.md
+│   ├── cli_reference.md
+│   ├── AGENT-INTEGRATION.md
+│   ├── WORKFLOW-SYNTAX.md
+│   └── ...
+├── tests/               # Test suite
+├── examples/            # Usage examples
 ├── .github/
-│   └── workflows/       # GitHub workflows
+│   ├── workflows/       # GitHub workflows
+│   └── actions/         # Reusable actions
 └── pyproject.toml       # Root workspace configuration
 ```
+
+## Agent Tools
+
+This repository also includes `agent-tools`, a Python CLI for managing isolated Git worktrees for agent workflows.
+
+### Local agent workflow (no CI, no bot)
+
+```bash
+# Install agent-tools
+cd agt
+pip install -e .
+
+# Use it
+agt start                    # Create isolated worktree + branch
+agt run "python my_task.py"  # Generate code
+agt commit "feat: add generated code"
+agt push                    # Push branch (open PR manually)
+
+# Optional cleanup after PR is merged
+agt clean                   # Remove worktree
+```
+
+See [agt/README.md](agt/README.md) for more details.
+
+## Documentation
+
+See the [docs/](docs/) directory for detailed documentation:
+
+- [Quick Start](docs/quick_start.md) - Get started with agent-tools
+- [CLI Reference](docs/cli_reference.md) - Complete command reference
+- [Architecture](docs/architecture.md) - Architecture overview
+- [Changelog](docs/CHANGELOG.md) - Version history
+
+**Note:** Some documentation files (AGENT-INTEGRATION.md, WORKFLOW-SYNTAX.md, etc.) may contain references to PR-bot functionality that is no longer part of this repository.
 
 ## License
 

@@ -31,3 +31,6 @@ _temp_*/
 *.psn.md
 export_*.json
 
+# Agent worktrees
+.work/
+

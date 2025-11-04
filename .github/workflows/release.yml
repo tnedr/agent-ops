@@ -1,0 +1,45 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      
+      - name: Install UV
+        uses: astral-sh/setup-uv@v4
+      
+      - name: Build package
+        run: |
+          cd agt
+          uv pip install build
+          uv run python -m build
+      
+      - name: Publish to PyPI (optional)
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          PYPI_API_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
+        run: |
+          # Uncomment when ready to publish:
+          # cd agt
+          # uv pip install twine
+          # uv run twine upload dist/* --username __token__ --password "$PYPI_API_TOKEN"
+          echo "PyPI publishing disabled - set PYPI_API_TOKEN secret to enable"
+      
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: agt/dist/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+

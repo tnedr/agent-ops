@@ -1,0 +1,45 @@
+name: Agent Workflow Demo
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  agent-demo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      
+      - name: Install agent-tools
+        run: |
+          cd .tools/agt || cd agt
+          pip install -e .
+      
+      - name: Authenticate GitHub CLI
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "$GITHUB_TOKEN" | gh auth login --with-token
+      
+      - name: Run agent workflow
+        env:
+          AGENT_ID: ${{ env.AGENT_ID }}
+        run: |
+          # Start agent
+          agt start
+          
+          # Run some work in worktree
+          agt run "echo '# Agent Work' > agent-output.md"
+          agt run "git add agent-output.md"
+          
+          # Finish and create PR
+          agt finish "feat: agent demo" "Agent Workflow Demo" --ci
+
