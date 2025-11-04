@@ -151,7 +151,10 @@ agt run "python my_task.py"  # Generate code
 agt commit "feat: add generated code"
 agt push                    # Push branch (open PR manually)
 
-# Optional cleanup after PR is merged
+# Optional: merge locally (if permitted)
+agt merge                   # Fast-forward merge to main
+
+# Optional: cleanup after merge
 agt clean                   # Remove worktree
 ```
 

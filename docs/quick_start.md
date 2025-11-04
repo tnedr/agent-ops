@@ -64,7 +64,15 @@ agt push
 
 This pushes the branch to the remote repository. You can then open a PR manually in the GitHub UI.
 
-### 5. Clean up (optional)
+### 5. Merge locally (optional)
+
+```bash
+agt merge
+```
+
+This merges the branch into `main` using fast-forward merge. **Warning:** Only works if you have write access to `main` and no branch protection rules. Otherwise, use manual PR review.
+
+### 6. Clean up (optional)
 
 ```bash
 agt clean
@@ -87,7 +95,10 @@ agt commit "feat: add generated code"
 # Push to remote
 agt push          # open PR manually in GitHub UI
 
-# Optional: cleanup after PR is merged
+# Optional: merge locally (if permitted)
+agt merge         # only if no branch protection
+
+# Optional: cleanup after merge
 agt clean
 ```
 

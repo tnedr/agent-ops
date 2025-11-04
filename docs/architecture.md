@@ -34,6 +34,7 @@ Command-line interface:
 - `cmd_run()`: Execute commands in worktree
 - `cmd_commit()`: Commit changes in worktree
 - `cmd_push()`: Push branch to remote
+- `cmd_merge()`: Merge branch into main (fast-forward)
 - `cmd_clean()`: Remove worktree
 
 ## Workflow
@@ -59,7 +60,14 @@ Command-line interface:
    - Sets upstream tracking
    - User opens PR manually in GitHub UI
 
-5. **Clean** (optional): User runs `agt clean`
+5. **Merge** (optional): User runs `agt merge`
+   - Fetches latest `main` from remote
+   - Rebases agent branch onto `origin/main`
+   - Fast-forwards merge into `main`
+   - Pushes `main` to remote
+   - **Note:** Only works if no branch protection rules
+
+6. **Clean** (optional): User runs `agt clean`
    - Removes worktree directory
    - Cleans up Git worktree references
    - Branch remains on remote

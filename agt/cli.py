@@ -107,6 +107,43 @@ def cmd_push(remote: str = "origin") -> None:
     print("🚀 Pushed to remote; open a PR in the UI if needed")
 
 
+def cmd_merge() -> None:
+    """Merge agent branch into main (fast-forward only)."""
+    agent_id = os.environ.get("AGENT_ID")
+    if not agent_id:
+        err("Run 'agt start' first!")
+    
+    root = get_repo_root()
+    worktree_path = get_worktree_path(root, agent_id)
+    
+    if not worktree_path.exists():
+        err(f"Worktree not found: {worktree_path}. Run 'agt start' first!")
+    
+    branch_name = f"feat/{agent_id}"
+    
+    # Fetch latest main
+    subprocess.run("git fetch origin main", shell=True, check=True, cwd=worktree_path)
+    
+    # Rebase onto main
+    subprocess.run("git rebase origin/main", shell=True, check=True, cwd=worktree_path)
+    
+    # Switch to main branch in root repo
+    subprocess.run("git checkout main", shell=True, check=True, cwd=root)
+    
+    # Fast-forward merge
+    subprocess.run(
+        f"git merge --ff-only {branch_name}",
+        shell=True,
+        check=True,
+        cwd=root,
+    )
+    
+    # Push to remote
+    subprocess.run("git push origin main", shell=True, check=True, cwd=root)
+    
+    print("✅ Branch fast-forwarded to main")
+
+
 def cmd_clean() -> None:
     """Remove the agent worktree."""
     agent_id = os.environ.get("AGENT_ID")
@@ -126,7 +163,7 @@ def cmd_clean() -> None:
 def main() -> None:
     """Main CLI entrypoint."""
     if len(sys.argv) < 2:
-        print("Usage: agt <start|run|commit|push|clean> [args...]", file=sys.stderr)
+        print("Usage: agt <start|run|commit|push|merge|clean> [args...]", file=sys.stderr)
         sys.exit(1)
     
     cmd = sys.argv[1]
@@ -150,6 +187,9 @@ def main() -> None:
     elif cmd == "push":
         remote = args[0] if args else "origin"
         cmd_push(remote)
+    
+    elif cmd == "merge":
+        cmd_merge()
     
     elif cmd == "clean":
         cmd_clean()

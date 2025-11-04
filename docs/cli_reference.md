@@ -120,6 +120,33 @@ agt clean
 
 ---
 
+### `agt merge`
+
+Merge agent branch into main using fast-forward merge (local only).
+
+**Requirements:**
+- Must run `agt start` first
+- Must have pushed branch (run `agt push` first)
+- Must have write access to `main` branch
+- No branch protection rules (or admin override)
+- `AGENT_ID` environment variable must be set
+
+**Examples:**
+```bash
+agt merge
+```
+
+**What it does:**
+1. Fetches latest `main` from remote
+2. Rebases agent branch onto `origin/main`
+3. Switches to `main` branch in root repo
+4. Performs fast-forward merge (`git merge --ff-only`)
+5. Pushes `main` to remote
+
+**Warning:** This command only works if you have direct write access to `main` and there are no branch protection rules. In most cases, use manual PR review instead.
+
+---
+
 ## Error Handling
 
 All commands exit with non-zero status on error:
@@ -129,11 +156,28 @@ All commands exit with non-zero status on error:
 
 ## Environment Variables
 
-- `AGENT_ID`: Automatically set by `agt start`, required by `run`, `commit`, `push`, and `clean`
+- `AGENT_ID`: Automatically set by `agt start`, required by `run`, `commit`, `push`, `merge`, and `clean`
 
 ## Exit Codes
 
 - `0`: Success
 - `1`: Usage error
 - `2`: Worktree not found
+
+---
+
+## Agent CLI – Required Commands
+
+Quick reference table for agents:
+
+| Step | Command |
+|------|---------|
+| Create isolated worktree | `agt start` |
+| Run task | `agt run "python task.py"` |
+| Commit changes | `agt commit "feat: xyz"` |
+| Push to remote | `agt push` |
+| (optional) Merge locally | `agt merge` *(if permitted)* |
+| Cleanup | `agt clean` |
+
+**Note:** The `merge` command only works if you have write access to the `main` branch and there are no branch protection rules. Otherwise, use manual PR review in GitHub UI.
 
