@@ -71,8 +71,8 @@ The project includes a Command Runner integration for VS Code/Cursor:
 
 4. **Agents can use these commands:**
    ```bash
-   agt run python ${workspaceFolder}/scripts/multiply.py 3 7
-   agt run python ${workspaceFolder}/scripts/venv_check.py
+   agt run python ${workspaceFolder}/.tools/scripts/multiply.py 3 7
+   agt run python ${workspaceFolder}/.tools/scripts/venv_check.py
    ```
 
 ## Documentation
