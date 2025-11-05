@@ -409,13 +409,13 @@ TASK (task) COMMANDS (Preview):
         Mark a task as done (not yet implemented).
 
 LEGACY ALIASES (deprecated, will be removed in v0.4):
-    agt start    → agt ws new
-    agt commit   → agt ws save
-    agt run      → agt ws run
-    agt push     → agt ws push
-    agt merge    → agt ws merge
-    agt clean    → agt ws clean
-    agt vscode init → agt cfg vscode
+    agt start         -> agt ws new
+    agt commit        -> agt ws save
+    agt run           -> agt ws run
+    agt push          -> agt ws push
+    agt merge         -> agt ws merge
+    agt clean         -> agt ws clean
+    agt vscode init   -> agt cfg vscode
 
 OPTIONS:
     --version, -v    Show version information
@@ -432,7 +432,7 @@ EXAMPLES:
 
 For more information, see: https://github.com/tnedr/agent-ops
 """
-    print(help_text.strip())
+    safe_print(help_text.strip())
 
 
 def main() -> None:
