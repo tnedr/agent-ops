@@ -21,13 +21,15 @@ Worktree-based agent workflow management toolkit.
 ```bash
 # From source
 cd agt
-pip install -e .
+uv pip install -e .  # or: pip install -e .
 
 # Or as submodule
 git submodule add -b main https://github.com/tnedr/agent-ops .tools
 cd .tools/agt
-pip install -e .
+uv pip install -e .  # or: pip install -e .
 ```
+
+**Note**: This project follows UV Cache Workflow Guidelines. If using `uv`, ensure `UV_CACHE_DIR` is set (e.g., `E:\uv-cache` on Windows).
 
 ### Usage
 

@@ -87,13 +87,34 @@ This project follows UV Cache Workflow Guidelines:
 
 - Uses `uv` for package management
 - Minimal `.venv`, maximum cache usage
+- Global cache at `E:\uv-cache` (or `UV_CACHE_DIR`)
+
+### Prerequisites
+
+```bash
+# Set UV cache directory (one-time setup)
+# Windows PowerShell:
+setx UV_CACHE_DIR "E:\uv-cache"
+
+# Linux/Mac:
+export UV_CACHE_DIR="$HOME/.uv-cache"
+# Add to ~/.bashrc or ~/.zshrc for persistence
+```
 
 ### Setup
 
 ```bash
 cd agt
-pip install -e ".[dev]"
+
+# Create minimal venv (if not exists)
+python -m venv .venv --symlinks  # Windows
+# or: python3 -m venv .venv --symlinks  # Linux/Mac
+
+# Install with uv (uses global cache)
+uv pip install -e ".[dev]"  # or: pip install -e ".[dev]"
 ```
+
+**Note**: If using `uv`, ensure `UV_CACHE_DIR` is set (e.g., `E:\uv-cache` on Windows). This uses global cache for faster installs and minimal `.venv` size. The `.venv` should be minimal (< 50MB), while the global cache can be 5-15GB (shared across all projects).
 
 ### Run Tests
 
