@@ -14,13 +14,16 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v4
       - run: uv pip install --upgrade build twine
-      - run: uv build
-      # - name: Publish to PyPI
-      #   env:
-      #     TWINE_USERNAME: __token__
-      #     TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-      #   run: uv run twine upload dist/*
+      - name: Build package
+        working-directory: ./agt
+        run: uv build
+      - name: Publish to PyPI
+        working-directory: ./agt
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+        run: uv run twine upload dist/*
       - name: Smoke-test
         run: |
-          uv pip install dist/*.whl
-          agt --help
+          uv pip install agt/dist/*.whl
+          uv run agt --help
