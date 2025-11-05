@@ -26,6 +26,31 @@ uv pip install -e .  # or: pip install -e .
 pipx install agent-tools
 ```
 
+### Submodule Workflow
+
+When using `agent-tools` as a Git submodule (recommended for production):
+
+| Aspect | Manual Clone | Submodule |
+|--------|--------------|-----------|
+| **Version Pinning** | Manual tracking | Git commit points to exact state |
+| **One-line Clone** | `git clone ... && cd .tools/agt` | `git clone ... && git submodule update --init --recursive` |
+| **VS Code Paths** | Machine-specific absolute paths | Stable `${workspaceFolder}/.tools/agt` |
+| **Dependency Updates** | Manual pull | Explicit `git submodule update --remote` + commit |
+| **Reproducibility** | Depends on manual sync | Deterministic (commit hash) |
+
+**Benefits of submodule approach:**
+- ✅ Version pinning ensures reproducible builds
+- ✅ Stable paths work across different machines
+- ✅ Explicit updates prevent unexpected changes
+- ✅ CI/CD can use specific commit hashes
+
+**Updating submodule:**
+```bash
+# Update to latest main branch
+git submodule update --remote .tools
+git commit -m "chore: update agent-tools submodule"
+```
+
 ## Basic Usage
 
 ### 1. Start an agent worktree

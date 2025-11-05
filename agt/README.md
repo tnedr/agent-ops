@@ -50,6 +50,31 @@ agt push
 agt clean
 ```
 
+### VS Code Command Runner
+
+The project includes a Command Runner integration for VS Code/Cursor:
+
+1. **Generate Command Runner settings:**
+   ```bash
+   python scripts/update_command_runner.py
+   ```
+
+2. **Use commands in VS Code/Cursor:**
+   - Press `F1` → `Command Runner: Run...`
+   - Select `math.multiply`, `time.now`, or `env.check`
+   - Or use in chat: `> run command: math.multiply 7 6`
+
+3. **Available commands:**
+   - `math.multiply`: Multiply two numbers (with timestamp)
+   - `time.now`: Get current UTC timestamp
+   - `env.check`: Verify venv and colorama dependency
+
+4. **Agents can use these commands:**
+   ```bash
+   agt run python ${workspaceFolder}/scripts/multiply.py 3 7
+   agt run python ${workspaceFolder}/scripts/venv_check.py
+   ```
+
 ## Documentation
 
 - [Quick Start Guide](docs/quick_start.md)

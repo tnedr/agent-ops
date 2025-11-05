@@ -8,6 +8,9 @@ license = {text = "MIT"}
 authors = [
     {name = "Agent Tools Contributors"}
 ]
+dependencies = [
+    "colorama>=0.4.6",
+]
 
 [project.scripts]
 agt = "agt.cli:main"

@@ -40,6 +40,7 @@ agt run python script.py
 agt run "git add . && git status"
 agt run npm install
 agt run echo "Hello from worktree"
+agt run env.check  # Test venv and colorama dependency
 ```
 
 **Windows Note:** On Windows, `agt run` uses `cmd.exe` (not PowerShell) when `shell=True` is used. For best compatibility:
