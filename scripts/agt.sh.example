@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT="$(git rev-parse --show-toplevel)"
+
+# 1) Submodule venv bootstrap (első futáskor vagy frissítéskor)
+if [[ ! -d "$ROOT/.tools/.venv" ]]; then
+  (cd "$ROOT/.tools" && ./bootstrap.sh)
+fi
+
+# 2) VS Code Command Runner generálása, ha hiányzik
+if [[ ! -f "$ROOT/.vscode/settings.json" ]] || [[ "$ROOT/.tools/scripts/update_command_runner.py" -nt "$ROOT/.vscode/settings.json" ]]; then
+  python "$ROOT/.tools/scripts/update_command_runner.py"
+fi
+
+# 3) Igazi CLI-hívás
+exec "$ROOT/.tools/.venv/bin/agt" "$@"
+

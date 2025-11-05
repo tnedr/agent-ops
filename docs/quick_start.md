@@ -12,13 +12,20 @@ uv pip install -e .  # or: pip install -e .
 
 **Note**: This project follows UV Cache Workflow Guidelines. If using `uv`, packages are cached globally (e.g., `E:\uv-cache`), keeping `.venv` minimal.
 
-### Option 2: As submodule
+### Option 2: As submodule (Recommended)
 
 ```bash
+# Add submodule
 git submodule add -b main https://github.com/tnedr/agent-ops .tools
-cd .tools/agt
-uv pip install -e .  # or: pip install -e .
+git submodule update --init --recursive
+
+# Automated setup (creates venv with UV cache)
+cd .tools
+./bootstrap.sh
+cd ../..
 ```
+
+**Note**: The `bootstrap.sh` script uses UV for cache-aware installation. It automatically creates a minimal `.venv` and installs dependencies using the global cache (`UV_CACHE_DIR`). This ensures fast installs and minimal disk usage per project.
 
 ### Option 3: Via pipx (when published to PyPI)
 
@@ -53,10 +60,30 @@ git commit -m "chore: update agent-tools submodule"
 
 ## Basic Usage
 
+### First-time Setup
+
+If using the submodule approach, run the bootstrap script once:
+
+```bash
+git submodule update --init --recursive
+cd .tools
+./bootstrap.sh
+cd ../..
+
+# Test the setup
+./scripts/agt.sh run env.check  # or: cd .tools/.venv/bin && ./agt run env.check
+```
+
+This will:
+- Create a minimal `.venv` using `uv venv` (UV Cache Workflow compliant)
+- Install agent-tools with CLI extras (colorama)
+- Test the venv with `env.check` command
+
 ### 1. Start an agent worktree
 
 ```bash
 agt start
+# or with wrapper: ./scripts/agt.sh start
 ```
 
 This creates:

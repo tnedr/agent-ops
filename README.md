@@ -153,12 +153,42 @@ See the [docs/](docs/) directory for detailed documentation:
 ### As Git Submodule (Recommended)
 
 ```bash
+# Add submodule
 git submodule add -b main https://github.com/tnedr/agent-ops .tools
-cd .tools/agt
-uv pip install -e .  # or: pip install -e .
+git submodule update --init --recursive
+
+# First-time setup (automatic venv creation with UV cache)
+cd .tools
+./bootstrap.sh
+
+# Or use the wrapper script (recommended)
+# Copy scripts/agt.sh.example to scripts/agt.sh in your project root
+# Then: ./scripts/agt.sh start
 ```
 
-**Note**: Uses UV Cache Workflow - minimal `.venv`, global cache (`E:\uv-cache` or `UV_CACHE_DIR`).
+**Note**: Uses UV Cache Workflow - minimal `.venv`, global cache (`E:\uv-cache` or `UV_CACHE_DIR`). The `bootstrap.sh` script automatically creates a minimal venv using `uv venv` and installs dependencies with cache support.
+
+### First-time Setup
+
+For a completely automated setup, use the wrapper script:
+
+```bash
+# 1. Add submodule
+git submodule update --init --recursive
+
+# 2. Copy wrapper script (one-time)
+cp .tools/scripts/agt.sh.example scripts/agt.sh
+chmod +x scripts/agt.sh
+
+# 3. First run (auto-creates venv and tests it)
+./scripts/agt.sh run env.check  # builds .tools/.venv and tests colorama
+```
+
+The wrapper script automatically:
+- Creates `.tools/.venv` if missing (using `uv venv` for minimal size)
+- Installs/updates agent-tools with CLI extras (colorama)
+- Generates VS Code Command Runner settings
+- Runs your command using the venv's `agt` binary
 
 ### From PyPI (when published)
 
