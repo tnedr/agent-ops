@@ -1,8 +1,8 @@
 {
   "command-runner.commands": {
-    "math.multiply": "python ${workspaceFolder}/scripts/multiply.py ${input:a} ${input:b}",
-    "time.now": "python ${workspaceFolder}/scripts/current_time.py",
-    "env.check": "python ${workspaceFolder}/scripts/venv_check.py"
+    "math.multiply": "python ${workspaceFolder}/.tools/scripts/multiply.py ${input:a} ${input:b}",
+    "time.now": "python ${workspaceFolder}/.tools/scripts/current_time.py",
+    "env.check": "python ${workspaceFolder}/.tools/scripts/venv_check.py"
   },
   "command-runner.inputs": {
     "a": {

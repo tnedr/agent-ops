@@ -7,7 +7,7 @@ workspace:
 
 math.multiply:
   description: "Két szám szorzása (a×b)"
-  command: "python ${workspaceFolder}/scripts/multiply.py {a} {b}"
+  command: "python ${workspaceFolder}/.tools/scripts/multiply.py {a} {b}"
   args:
     a:
       type: number
@@ -18,11 +18,11 @@ math.multiply:
 
 time.now:
   description: "Jelenlegi UTC időbélyeg"
-  command: "python ${workspaceFolder}/scripts/current_time.py"
+  command: "python ${workspaceFolder}/.tools/scripts/current_time.py"
   args: {}  # nincs paraméter
 
 env.check:
   description: "Teszteli, hogy a venv-ben a colorama telepítve van"
-  command: "python ${workspaceFolder}/scripts/venv_check.py"
+  command: "python ${workspaceFolder}/.tools/scripts/venv_check.py"
   args: {}
 
