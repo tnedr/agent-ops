@@ -1,0 +1,18 @@
+# Tools configuration for Command Runner
+# This file defines tools that can be executed via the command-runner extension
+# The update_command_runner.py script generates .vscode/settings.json from this file
+
+workspace:
+  folder: "${workspaceFolder}"
+
+math.multiply:
+  description: "Timestamp + a×b kiírása"
+  command: "python ${workspaceFolder}/scripts/multiply.py {a} {b}"
+  args:
+    a:
+      type: number
+      description: "Első tényező"
+    b:
+      type: number
+      description: "Második tényező"
+

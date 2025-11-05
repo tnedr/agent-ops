@@ -1,0 +1,3 @@
+# Requirements for scripts in this directory
+PyYAML>=6.0
+
