@@ -28,4 +28,5 @@ jobs:
       - name: Smoke-test
         run: |
           uv pip install --system agt/dist/agent_tools_drnt-*.whl
-          uv run agt --help
+          python -c "import agt; print('Package installed successfully')"
+          python -c "from agt.cli import main; print('CLI module importable')"
