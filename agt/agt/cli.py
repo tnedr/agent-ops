@@ -346,22 +346,117 @@ def cmd_clean(agent_id: Optional[str] = None) -> None:
     safe_print(f"✅ Worktree removed ({agent_id})")
 
 
+def show_help() -> None:
+    """Show help information."""
+    from agt import __version__
+    help_text = f"""
+agent-tools-drnt v{__version__} - Worktree-based agent workflow management
+
+USAGE:
+    agt <domain> <action> [args...]
+
+DOMAINS:
+    ws          Workspace (Git worktree) operations
+    cfg         Configuration commands
+    task        Task management (preview - not yet implemented)
+    env         Environment diagnostics
+
+WORKSPACE (ws) COMMANDS:
+    agt ws new [base-branch]
+        Create a new isolated agent worktree.
+        Example: agt ws new develop
+
+    agt ws run <command> [--agent <id>]
+        Run a command in the agent worktree.
+        Example: agt ws run "pytest -q"
+
+    agt ws save "<message>" [--agent <id>]
+        Commit all changes in the agent worktree.
+        Example: agt ws save "feat: add new feature"
+
+    agt ws push [remote] [--agent <id>]
+        Push the agent branch to remote repository.
+        Example: agt ws push origin
+
+    agt ws merge [--agent <id>]
+        Merge agent branch back to main (fast-forward only).
+
+    agt ws clean [--agent <id>]
+        Remove the agent worktree after PR is merged.
+
+CONFIG (cfg) COMMANDS:
+    agt cfg vscode
+        Generate VS Code Command Runner settings with agt commands.
+
+ENVIRONMENT (env) COMMANDS:
+    agt env check
+        Show environment information (Python version, platform).
+
+    agt env python <script> [args...]
+        Run a Python script with the system Python.
+
+TASK (task) COMMANDS (Preview):
+    agt task list [--status STATUS]
+        List tasks (not yet implemented).
+
+    agt task add <id> <description>
+        Add a new task (not yet implemented).
+
+    agt task pick <id> [--agent AGENT_ID]
+        Pick a task to work on (not yet implemented).
+
+    agt task done <id>
+        Mark a task as done (not yet implemented).
+
+LEGACY ALIASES (deprecated, will be removed in v0.4):
+    agt start    → agt ws new
+    agt commit   → agt ws save
+    agt run      → agt ws run
+    agt push     → agt ws push
+    agt merge    → agt ws merge
+    agt clean    → agt ws clean
+    agt vscode init → agt cfg vscode
+
+OPTIONS:
+    --version, -v    Show version information
+    --help, -h       Show this help message
+
+EXAMPLES:
+    # Complete workflow
+    agt ws new                    # Create worktree
+    agt ws run "pytest -q"        # Run tests
+    agt ws save "feat: tests"     # Commit changes
+    agt ws push                   # Push to remote
+    agt cfg vscode                # Setup VS Code integration
+    agt ws clean                  # Cleanup after merge
+
+For more information, see: https://github.com/tnedr/agent-ops
+"""
+    print(help_text.strip())
+
+
 def main() -> None:
     """Main CLI entrypoint."""
     if len(sys.argv) < 2:
-        print(
-            "Usage: agt <domain> <action> [args...]\n"
-            "Domains: ws (workspace), cfg (config), task (preview), env (environment)\n"
-            "See 'agt <domain> --help' for domain-specific help",
-            file=sys.stderr,
-        )
+        show_help()
         sys.exit(1)
+    
+    # Check for version flag
+    if sys.argv[1] in ["--version", "-v"]:
+        from agt import __version__
+        print(f"agent-tools-drnt {__version__}")
+        sys.exit(0)
+    
+    # Check for help flag
+    if sys.argv[1] in ["--help", "-h", "help"]:
+        show_help()
+        sys.exit(0)
     
     # Resolve aliases and get domain/action
     domain, action, rest_args = _resolve_alias(sys.argv[1:])
     
     if domain is None or action is None:
-        err("Invalid command. Use 'agt <domain> <action>' or legacy aliases.")
+        err("Invalid command. Use 'agt <domain> <action>' or legacy aliases.\nUse 'agt --help' for help.")
     
     # Dispatch to domain handlers
     if domain == "ws":
@@ -373,7 +468,7 @@ def main() -> None:
     elif domain == "env":
         env_dispatch(action, rest_args)
     else:
-        err(f"Unknown domain: {domain}. Available: ws, cfg, task, env")
+        err(f"Unknown domain: {domain}. Available: ws, cfg, task, env\nUse 'agt --help' for help.")
 
 
 if __name__ == "__main__":

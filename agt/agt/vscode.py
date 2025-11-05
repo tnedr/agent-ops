@@ -16,16 +16,48 @@ def safe_print(msg: str, file=sys.stdout) -> None:
         print(msg, file=file)
 
 
-CMD_BLOCK = {
-    "agt ws new": "agt ws new",
-    "agt ws run": "agt ws run \"${input:cmd}\"",
-    "agt ws save": "agt ws save \"${input:msg}\"",
-    "agt ws push": "agt ws push",
-    "agt ws merge": "agt ws merge",
-    "agt ws clean": "agt ws clean",
-    "agt cfg vscode": "agt cfg vscode",
-    "agt env check": "agt env check",
+# Command definitions with descriptions for VS Code Command Runner
+CMD_DEFINITIONS = {
+    "agt ws new": {
+        "command": "agt ws new",
+        "description": "Create a new isolated agent worktree (equivalent to 'agt start')"
+    },
+    "agt ws run": {
+        "command": "agt ws run \"${input:cmd}\"",
+        "description": "Run a command in the agent worktree (equivalent to 'agt run')"
+    },
+    "agt ws save": {
+        "command": "agt ws save \"${input:msg}\"",
+        "description": "Commit all changes in the agent worktree (equivalent to 'agt commit')"
+    },
+    "agt ws push": {
+        "command": "agt ws push",
+        "description": "Push the agent branch to remote repository (equivalent to 'agt push')"
+    },
+    "agt ws merge": {
+        "command": "agt ws merge",
+        "description": "Merge agent branch back to main (fast-forward only, equivalent to 'agt merge')"
+    },
+    "agt ws clean": {
+        "command": "agt ws clean",
+        "description": "Remove the agent worktree after PR is merged (equivalent to 'agt clean')"
+    },
+    "agt cfg vscode": {
+        "command": "agt cfg vscode",
+        "description": "Generate VS Code Command Runner settings with agt commands"
+    },
+    "agt env check": {
+        "command": "agt env check",
+        "description": "Show environment information (Python version, platform)"
+    },
+    "time.now": {
+        "command": "python ${workspaceFolder}/.tools/scripts/current_time.py",
+        "description": "Get current UTC timestamp"
+    },
 }
+
+# For backward compatibility, also create simple command mapping
+CMD_BLOCK = {name: defn["command"] for name, defn in CMD_DEFINITIONS.items()}
 
 
 def cmd_vscode_init() -> None:
@@ -56,7 +88,22 @@ def cmd_vscode_init() -> None:
         data["command-runner.commands"] = {}
     
     # Update with agt commands (preserve existing commands)
-    data["command-runner.commands"].update(CMD_BLOCK)
+    # Convert definitions to Command Runner format (supports description field)
+    for cmd_name, cmd_def in CMD_DEFINITIONS.items():
+        # Command Runner supports both string (simple) and object (with description) formats
+        # We'll use object format if description is available
+        if isinstance(data["command-runner.commands"].get(cmd_name), str):
+            # Update existing string command to object format
+            data["command-runner.commands"][cmd_name] = {
+                "command": cmd_def["command"],
+                "description": cmd_def["description"]
+            }
+        else:
+            # Add new command with description
+            data["command-runner.commands"][cmd_name] = {
+                "command": cmd_def["command"],
+                "description": cmd_def["description"]
+            }
     
     # Add input definitions if missing
     if "command-runner.inputs" not in data:
