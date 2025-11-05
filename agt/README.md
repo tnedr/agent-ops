@@ -9,7 +9,8 @@ Worktree-based agent workflow management toolkit.
 ## Features
 
 - **Isolated Worktrees**: Each agent gets its own isolated Git worktree
-- **Simple CLI**: `start`, `run`, `commit`, `push`, `clean` commands
+- **Domain-based CLI**: `ws`, `cfg`, `env` domains with clear action names
+- **Backward Compatible**: Legacy aliases supported (deprecated in v0.3, removed in v0.4)
 - **Manual PR Creation**: Push branch and create PR manually in GitHub UI
 - **Cross-platform**: Works on Windows, Linux, and macOS
 - **Installable**: Can be installed via pip or used as submodule
@@ -33,22 +34,36 @@ uv pip install -e .  # or: pip install -e .
 
 ### Usage
 
+**New domain-based commands (v0.3+):**
+
 ```bash
 # Start a new agent worktree
-agt start
+agt ws new
 
 # Run commands in the worktree
-agt run python my_script.py
+agt ws run python my_script.py
 
 # Commit changes
-agt commit "feat: new feature"
+agt ws save "feat: new feature"
 
 # Push to remote (then open PR manually)
-agt push
+agt ws push
 
 # Optional: cleanup after PR is merged
-agt clean
+agt ws clean
 ```
+
+**Legacy aliases (deprecated, will be removed in v0.4):**
+
+```bash
+agt start    # → agt ws new
+agt commit   # → agt ws save
+agt run      # → agt ws run
+agt push     # → agt ws push
+agt clean    # → agt ws clean
+```
+
+See [COMMANDS.md](docs/COMMANDS.md) for complete command reference.
 
 ### VS Code Integration
 

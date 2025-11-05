@@ -5,6 +5,36 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2025-01-XX
+
+### Added
+
+- **Domain-based CLI structure**: New `ws`, `cfg`, `env`, and `task` domains for better command organization
+- **New workspace commands**: `agt ws new`, `agt ws run`, `agt ws save`, `agt ws push`, `agt ws merge`, `agt ws clean`
+- **New config commands**: `agt cfg vscode` (replaces `agt vscode init`)
+- **New environment commands**: `agt env check`, `agt env python`
+- **Task module preview**: `agt task list/add/pick/done` commands reserved for future development (not yet implemented)
+- **Alias system**: Legacy single-word commands still work with deprecation warnings
+- **Complete command reference**: New [COMMANDS.md](docs/COMMANDS.md) documentation
+
+### Changed
+
+- **CLI refactoring**: Commands now use domain-based structure (`ws`, `cfg`, `env`) instead of single words
+- **Command renaming**: `agt commit` → `agt ws save`, `agt start` → `agt ws new`, `agt vscode init` → `agt cfg vscode`
+- **Error messages**: Updated to use new domain-based command names
+
+### Deprecated
+
+- **Legacy aliases**: The following commands are deprecated and will be removed in v0.4:
+  - `agt start` → Use `agt ws new`
+  - `agt commit` → Use `agt ws save`
+  - `agt run` → Use `agt ws run`
+  - `agt push` → Use `agt ws push`
+  - `agt merge` → Use `agt ws merge`
+  - `agt clean` → Use `agt ws clean`
+  - `agt vscode init` → Use `agt cfg vscode`
+- Deprecation warnings are shown when using legacy commands
+
 ## [0.1.0] - 2025-01-XX
 
 ### Added
