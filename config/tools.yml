@@ -21,3 +21,8 @@ time.now:
   command: "python ${workspaceFolder}/scripts/current_time.py"
   args: {}  # nincs paraméter
 
+env.check:
+  description: "Teszteli, hogy a venv-ben a colorama telepítve van"
+  command: "python ${workspaceFolder}/scripts/venv_check.py"
+  args: {}
+
