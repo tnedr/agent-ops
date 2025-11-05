@@ -3,7 +3,6 @@
 import os
 import subprocess
 import sys
-import warnings
 from pathlib import Path
 from typing import Optional, Tuple
 
@@ -18,49 +17,14 @@ from agt.worktree import (
     remove_worktree,
 )
 
-# Alias mapping: (old_command,) -> (domain, action)
-ALIASES = {
-    ("start",): ("ws", "new"),
-    ("commit",): ("ws", "save"),
-    ("run",): ("ws", "run"),
-    ("push",): ("ws", "push"),
-    ("merge",): ("ws", "merge"),
-    ("clean",): ("ws", "clean"),
-    ("vscode", "init"): ("cfg", "vscode"),
-}
-
-
-def _resolve_alias(argv: list[str]) -> Tuple[str, str, list[str]]:
-    """Resolve alias to domain and action, return (domain, action, remaining_args)."""
+def _parse_command(argv: list[str]) -> Tuple[Optional[str], Optional[str], list[str]]:
+    """Parse domain and action from argv, return (domain, action, remaining_args)."""
     if not argv:
         return None, None, []
     
-    # Check for two-word aliases first (e.g., "vscode init")
-    if len(argv) >= 2:
-        key = tuple(argv[:2])
-        if key in ALIASES:
-            domain, action = ALIASES[key]
-            warnings.warn(
-                f"'{' '.join(key)}' is deprecated, use 'agt {domain} {action}' instead",
-                DeprecationWarning,
-                stacklevel=2,
-            )
-            return domain, action, argv[2:]
-    
-    # Check for single-word aliases
-    key = (argv[0],)
-    if key in ALIASES:
-        domain, action = ALIASES[key]
-        warnings.warn(
-            f"'{argv[0]}' is deprecated, use 'agt {domain} {action}' instead",
-            DeprecationWarning,
-            stacklevel=2,
-        )
-        return domain, action, argv[1:]
-    
-    # No alias, treat first arg as domain
     if len(argv) < 2:
         return None, None, argv
+    
     return argv[0], argv[1], argv[2:]
 
 
@@ -408,15 +372,6 @@ TASK (task) COMMANDS (Preview):
     agt task done <id>
         Mark a task as done (not yet implemented).
 
-LEGACY ALIASES (deprecated, will be removed in v0.4):
-    agt start         -> agt ws new
-    agt commit        -> agt ws save
-    agt run           -> agt ws run
-    agt push          -> agt ws push
-    agt merge         -> agt ws merge
-    agt clean         -> agt ws clean
-    agt vscode init   -> agt cfg vscode
-
 OPTIONS:
     --version, -v    Show version information
     --help, -h       Show this help message
@@ -452,11 +407,11 @@ def main() -> None:
         show_help()
         sys.exit(0)
     
-    # Resolve aliases and get domain/action
-    domain, action, rest_args = _resolve_alias(sys.argv[1:])
+    # Parse domain and action
+    domain, action, rest_args = _parse_command(sys.argv[1:])
     
     if domain is None or action is None:
-        err("Invalid command. Use 'agt <domain> <action>' or legacy aliases.\nUse 'agt --help' for help.")
+        err("Invalid command. Use 'agt <domain> <action>'.\nUse 'agt --help' for help.")
     
     # Dispatch to domain handlers
     if domain == "ws":
