@@ -194,9 +194,9 @@ The wrapper script automatically:
 ### From PyPI (when published)
 
 ```bash
-uv pip install agent-tools  # or: pip install agent-tools
+uv pip install agent-tools-drnt  # or: pip install agent-tools-drnt
 # or
-pipx install agent-tools
+pipx install agent-tools-drnt
 ```
 
 ### From Source
@@ -216,7 +216,7 @@ This project uses semantic versioning. To use a specific version:
 git submodule add -b v0.1.0 https://github.com/tnedr/agent-ops .tools
 
 # PyPI (when published)
-uv pip install agent-tools==0.1.0  # or: pip install agent-tools==0.1.0
+uv pip install agent-tools-drnt==0.1.2  # or: pip install agent-tools-drnt==0.1.2
 ```
 
 ## Testing in Another Project
