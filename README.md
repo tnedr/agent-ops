@@ -140,6 +140,7 @@ ruff check --select I .  # Check import sorting
 
 See the [docs/](docs/) directory for detailed documentation:
 
+- [Integration Guide](docs/INTEGRATION_GUIDE.md) - **Start here!** Complete guide for integrating agent-ops as submodule in your project
 - [Quick Start Guide](docs/quick_start.md) - Get started with agent-tools
 - [CLI Reference](docs/cli_reference.md) - Complete command reference
 - [Architecture](docs/architecture.md) - Architecture overview
