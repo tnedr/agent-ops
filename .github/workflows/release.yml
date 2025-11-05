@@ -25,5 +25,5 @@ jobs:
         run: uv run twine upload dist/*
       - name: Smoke-test
         run: |
-          uv pip install agt/dist/*.whl
+          uv pip install agt/dist/agent_tools_drnt-*.whl
           uv run agt --help
