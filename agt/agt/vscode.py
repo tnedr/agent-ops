@@ -20,27 +20,27 @@ def safe_print(msg: str, file=sys.stdout) -> None:
 CMD_DEFINITIONS = {
     "agt ws new": {
         "command": "agt ws new",
-        "description": "Create a new isolated agent worktree (equivalent to 'agt start')"
+        "description": "Create a new isolated agent worktree"
     },
     "agt ws run": {
         "command": "agt ws run \"${input:cmd}\"",
-        "description": "Run a command in the agent worktree (equivalent to 'agt run')"
+        "description": "Run a command in the agent worktree"
     },
     "agt ws save": {
         "command": "agt ws save \"${input:msg}\"",
-        "description": "Commit all changes in the agent worktree (equivalent to 'agt commit')"
+        "description": "Commit all changes in the agent worktree"
     },
     "agt ws push": {
         "command": "agt ws push",
-        "description": "Push the agent branch to remote repository (equivalent to 'agt push')"
+        "description": "Push the agent branch to remote repository"
     },
     "agt ws merge": {
         "command": "agt ws merge",
-        "description": "Merge agent branch back to main (fast-forward only, equivalent to 'agt merge')"
+        "description": "Merge agent branch back to main (fast-forward only)"
     },
     "agt ws clean": {
         "command": "agt ws clean",
-        "description": "Remove the agent worktree after PR is merged (equivalent to 'agt clean')"
+        "description": "Remove the agent worktree after PR is merged"
     },
     "agt cfg vscode": {
         "command": "agt cfg vscode",
@@ -87,7 +87,28 @@ def cmd_vscode_init() -> None:
     if "command-runner.commands" not in data:
         data["command-runner.commands"] = {}
     
-    # Update with agt commands (preserve existing commands)
+    # Remove old deprecated agt commands (agt start, agt run, agt commit, etc.)
+    # Keep only non-agt commands and commands that are in CMD_DEFINITIONS
+    old_agt_commands = [
+        "agt start", "agt run", "agt commit", "agt push", 
+        "agt merge", "agt clean", "agt vscode init"
+    ]
+    commands = data["command-runner.commands"]
+    for old_cmd in old_agt_commands:
+        if old_cmd in commands:
+            del commands[old_cmd]
+    
+    # Also remove any other agt commands that start with "agt " but are not in CMD_DEFINITIONS
+    # (to catch any other old variations)
+    agt_cmd_names = {cmd_name for cmd_name in CMD_DEFINITIONS.keys() if cmd_name.startswith("agt ")}
+    commands_to_remove = [
+        cmd_name for cmd_name in commands.keys()
+        if cmd_name.startswith("agt ") and cmd_name not in agt_cmd_names
+    ]
+    for cmd_name in commands_to_remove:
+        del commands[cmd_name]
+    
+    # Update with agt commands (preserve existing non-agt commands)
     # Convert definitions to Command Runner format (supports description field)
     for cmd_name, cmd_def in CMD_DEFINITIONS.items():
         # Command Runner supports both string (simple) and object (with description) formats
