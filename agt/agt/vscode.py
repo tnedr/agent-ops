@@ -17,12 +17,14 @@ def safe_print(msg: str, file=sys.stdout) -> None:
 
 
 CMD_BLOCK = {
-    "agt start": "agt start",
-    "agt run": "agt run \"${input:cmd}\"",
-    "agt commit": "agt commit \"${input:msg}\"",
-    "agt push": "agt push",
-    "agt merge": "agt merge",
-    "agt clean": "agt clean",
+    "agt ws new": "agt ws new",
+    "agt ws run": "agt ws run \"${input:cmd}\"",
+    "agt ws save": "agt ws save \"${input:msg}\"",
+    "agt ws push": "agt ws push",
+    "agt ws merge": "agt ws merge",
+    "agt ws clean": "agt ws clean",
+    "agt cfg vscode": "agt cfg vscode",
+    "agt env check": "agt env check",
 }
 
 
@@ -60,14 +62,14 @@ def cmd_vscode_init() -> None:
     if "command-runner.inputs" not in data:
         data["command-runner.inputs"] = {}
     
-    # Add input for agt run command
+    # Add input for agt ws run command
     if "cmd" not in data["command-runner.inputs"]:
         data["command-runner.inputs"]["cmd"] = {
             "type": "promptString",
             "description": "Command to run in agent worktree"
         }
     
-    # Add input for agt commit command
+    # Add input for agt ws save command
     if "msg" not in data["command-runner.inputs"]:
         data["command-runner.inputs"]["msg"] = {
             "type": "promptString",
