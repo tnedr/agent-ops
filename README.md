@@ -197,6 +197,10 @@ The wrapper script automatically:
 uv pip install agent-tools-drnt  # or: pip install agent-tools-drnt
 # or
 pipx install agent-tools-drnt
+
+# After installation, set up VS Code integration:
+cd <project-root>
+agt vscode init  # Generates .vscode/settings.json with agt commands
 ```
 
 ### From Source

@@ -50,30 +50,28 @@ agt push
 agt clean
 ```
 
-### VS Code Command Runner
+### VS Code Integration
 
-The project includes a Command Runner integration for VS Code/Cursor:
+Generate VS Code Command Runner settings with agt commands:
 
-1. **Generate Command Runner settings:**
-   ```bash
-   python scripts/update_command_runner.py
-   ```
+```bash
+agt vscode init  # Creates/updates .vscode/settings.json
+```
 
-2. **Use commands in VS Code/Cursor:**
-   - Press `F1` → `Command Runner: Run...`
-   - Select `math.multiply`, `time.now`, or `env.check`
-   - Or use in chat: `> run command: math.multiply 7 6`
+This adds the following commands to VS Code/Cursor:
+- `agt start`: Start a new agent worktree
+- `agt run`: Run a command in the agent worktree (with input prompt)
+- `agt commit`: Commit changes (with input prompt for message)
+- `agt push`: Push branch to remote
+- `agt merge`: Merge agent branch back to base
+- `agt clean`: Remove agent worktree
 
-3. **Available commands:**
-   - `math.multiply`: Multiply two numbers (a×b)
-   - `time.now`: Get current UTC timestamp
-   - `env.check`: Verify venv and colorama dependency
+**Usage in VS Code/Cursor:**
+- Press `F1` → `Command Runner: Run...`
+- Select any `agt *` command
+- Or use in chat: `> run command: agt start`
 
-4. **Agents can use these commands:**
-   ```bash
-   agt run python ${workspaceFolder}/.tools/scripts/multiply.py 3 7
-   agt run python ${workspaceFolder}/.tools/scripts/venv_check.py
-   ```
+**Note:** The `agt vscode init` command preserves existing commands in your `.vscode/settings.json`, so you can combine it with other Command Runner configurations.
 
 ## Documentation
 

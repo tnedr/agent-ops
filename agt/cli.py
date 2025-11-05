@@ -6,6 +6,7 @@ import sys
 from pathlib import Path
 from typing import Optional
 
+from agt.vscode import cmd_vscode_init
 from agt.worktree import (
     add_worktree,
     generate_agent_id,
@@ -243,7 +244,7 @@ def cmd_clean(agent_id: Optional[str] = None) -> None:
 def main() -> None:
     """Main CLI entrypoint."""
     if len(sys.argv) < 2:
-        print("Usage: agt <start|run|commit|push|merge|clean> [args...]", file=sys.stderr)
+        print("Usage: agt <start|run|commit|push|merge|clean|vscode> [args...]", file=sys.stderr)
         sys.exit(1)
     
     cmd = sys.argv[1]
@@ -283,6 +284,11 @@ def main() -> None:
     
     elif cmd == "clean":
         cmd_clean(agent_id=agent_id)
+    
+    elif cmd == "vscode":
+        if not args or args[0] != "init":
+            err('Usage: agt vscode init')
+        cmd_vscode_init()
     
     else:
         err(f"Unknown subcommand: {cmd}")
