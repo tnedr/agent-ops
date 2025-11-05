@@ -1,6 +1,7 @@
 {
   "command-runner.commands": {
-    "math.multiply": "python ${workspaceFolder}/scripts/multiply.py ${input:a} ${input:b}"
+    "math.multiply": "python ${workspaceFolder}/scripts/multiply.py ${input:a} ${input:b}",
+    "time.now": "python ${workspaceFolder}/scripts/current_time.py"
   },
   "command-runner.inputs": {
     "a": {

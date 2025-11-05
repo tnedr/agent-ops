@@ -16,3 +16,8 @@ math.multiply:
       type: number
       description: "Második tényező"
 
+time.now:
+  description: "Jelenlegi UTC időbélyeg"
+  command: "python ${workspaceFolder}/scripts/current_time.py"
+  args: {}  # nincs paraméter
+
