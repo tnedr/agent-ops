@@ -1,0 +1,15 @@
+{
+  "command-runner.commands": {
+    "math.multiply": "python ${workspaceFolder}/scripts/multiply.py ${input:a} ${input:b}"
+  },
+  "command-runner.inputs": {
+    "a": {
+      "type": "promptString",
+      "description": "Első tényező"
+    },
+    "b": {
+      "type": "promptString",
+      "description": "Második tényező"
+    }
+  }
+}
