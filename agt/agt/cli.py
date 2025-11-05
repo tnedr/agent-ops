@@ -125,8 +125,12 @@ def env_dispatch(action: str, args: list[str]) -> None:
         if not args:
             err("Usage: agt env python <script> [args...]")
         subprocess.run([sys.executable] + args, check=True)
+    elif action == "time":
+        # Get current UTC timestamp
+        import datetime
+        print(datetime.datetime.now(datetime.UTC).isoformat())
     else:
-        err(f"Unknown env action: {action}. Available: check, python")
+        err(f"Unknown env action: {action}. Available: check, python, time")
 
 
 def cmd_start(base_branch: str = "main") -> None:
@@ -358,6 +362,9 @@ ENVIRONMENT (env) COMMANDS:
 
     agt env python <script> [args...]
         Run a Python script with the system Python.
+
+    agt env time
+        Get current UTC timestamp (ISO format).
 
 TASK (task) COMMANDS (Preview):
     agt task list [--status STATUS]
