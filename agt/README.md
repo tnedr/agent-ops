@@ -65,7 +65,7 @@ The project includes a Command Runner integration for VS Code/Cursor:
    - Or use in chat: `> run command: math.multiply 7 6`
 
 3. **Available commands:**
-   - `math.multiply`: Multiply two numbers (with timestamp)
+   - `math.multiply`: Multiply two numbers (a×b)
    - `time.now`: Get current UTC timestamp
    - `env.check`: Verify venv and colorama dependency
 

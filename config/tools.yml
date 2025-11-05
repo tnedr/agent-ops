@@ -6,7 +6,7 @@ workspace:
   folder: "${workspaceFolder}"
 
 math.multiply:
-  description: "Timestamp + a×b kiírása"
+  description: "Két szám szorzása (a×b)"
   command: "python ${workspaceFolder}/scripts/multiply.py {a} {b}"
   args:
     a:
