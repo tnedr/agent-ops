@@ -1,5 +1,7 @@
 """CLI entrypoint for agt command."""
 
+import hashlib
+import json
 import os
 import subprocess
 import sys
@@ -129,8 +131,102 @@ def env_dispatch(action: str, args: list[str]) -> None:
         # Get current UTC timestamp
         import datetime
         print(datetime.datetime.now(datetime.UTC).isoformat())
+    elif action == "audit":
+        # Project audit: find empty files, large files, duplicates
+        cmd_env_audit(args)
     else:
-        err(f"Unknown env action: {action}. Available: check, python, time")
+        err(f"Unknown env action: {action}. Available: check, python, time, audit")
+
+
+def cmd_env_audit(args: list[str]) -> None:
+    """Run project audit: find empty files, large files, and duplicates."""
+    # Parse output path (optional)
+    output_path = Path("reports/project_audit_report.json")
+    exclude_dirs = {".git", "docs_refactor"}
+    
+    if args:
+        output_path = Path(args[0])
+    
+    # Ensure output directory exists
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    
+    safe_print("INFO: Starting project audit...")
+    safe_print("INFO: Scanning files (excluding .git and docs_refactor)...")
+    
+    report = {
+        "empty_files": [],
+        "large_files": [],
+        "duplicate_hashes": {},
+        "summary": {"total_files": 0, "total_size_kb": 0}
+    }
+    
+    hashes = {}
+    processed = 0
+    
+    root_path = Path.cwd()
+    
+    for root, dirs, files in os.walk(root_path):
+        # Skip excluded directories
+        rel_root = Path(root).relative_to(root_path)
+        if any(part in exclude_dirs for part in rel_root.parts):
+            # Remove from dirs to prevent walking into them
+            dirs[:] = [d for d in dirs if d not in exclude_dirs]
+            continue
+        
+        # Log progress
+        if processed % 1000 == 0 and processed > 0:
+            safe_print(f"INFO: Processed {processed} files... (current: {rel_root})")
+        
+        for f in files:
+            path = Path(root) / f
+            try:
+                size = path.stat().st_size
+                report["summary"]["total_files"] += 1
+                report["summary"]["total_size_kb"] += size / 1024
+                processed += 1
+                
+                # Check for empty files
+                if size == 0:
+                    report["empty_files"].append(str(path.relative_to(root_path)))
+                
+                # Check for large files (>10MB)
+                if size > 10_000_000:
+                    report["large_files"].append({
+                        "path": str(path.relative_to(root_path)),
+                        "size_mb": round(size / 1_000_000, 2)
+                    })
+                
+                # Calculate hash for duplicate detection (first 8KB)
+                try:
+                    with open(path, "rb") as fh:
+                        h = hashlib.md5(fh.read(8192)).hexdigest()
+                        rel_path = str(path.relative_to(root_path))
+                        hashes.setdefault(h, []).append(rel_path)
+                except (IOError, OSError):
+                    # Skip files that can't be read
+                    pass
+                    
+            except (OSError, PermissionError):
+                # Silently skip files that can't be accessed
+                pass
+    
+    safe_print(f"INFO: Finished scanning. Total files processed: {processed}")
+    safe_print("INFO: Analyzing duplicates...")
+    
+    # Find duplicates (files with same hash)
+    report["duplicate_hashes"] = {k: v for k, v in hashes.items() if len(v) > 1}
+    
+    safe_print(f"INFO: Found {len(report['empty_files'])} empty files")
+    safe_print(f"INFO: Found {len(report['large_files'])} large files (>10MB)")
+    safe_print(f"INFO: Found {len(report['duplicate_hashes'])} duplicate file groups")
+    
+    # Write report
+    safe_print(f"INFO: Writing report to {output_path}...")
+    with open(output_path, "w", encoding="utf-8") as out:
+        json.dump(report, out, indent=2)
+    
+    safe_print(f"SUCCESS: Project audit report saved to {output_path}")
+    safe_print(f"SUMMARY: {report['summary']['total_files']} files, {report['summary']['total_size_kb']/1024:.2f} MB total")
 
 
 def cmd_start(base_branch: str = "main") -> None:
@@ -365,6 +461,10 @@ ENVIRONMENT (env) COMMANDS:
 
     agt env time
         Get current UTC timestamp (ISO format).
+
+    agt env audit [output-path]
+        Run project audit: find empty files, large files (>10MB), and duplicates.
+        Outputs JSON report (default: reports/project_audit_report.json).
 
 TASK (task) COMMANDS (Preview):
     agt task list [--status STATUS]
