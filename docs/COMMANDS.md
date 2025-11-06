@@ -160,3 +160,4 @@ A következő parancsok v0.3-ban még működnek, de DeprecationWarning-et adnak
 - `agt clean` → `agt ws clean`
 - `agt vscode init` → `agt cfg vscode`
 
+

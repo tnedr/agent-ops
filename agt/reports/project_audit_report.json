@@ -1,0 +1,497 @@
+{
+  "empty_files": [
+    ".venv\\.lock",
+    ".venv\\Lib\\site-packages\\_agent_tools_drnt.pth",
+    ".venv\\Lib\\site-packages\\agent_tools-0.1.1.dist-info\\REQUESTED",
+    ".venv\\Lib\\site-packages\\agent_tools_drnt-0.2.0.dist-info\\REQUESTED",
+    ".venv\\Lib\\site-packages\\build\\py.typed",
+    ".venv\\Lib\\site-packages\\build\\_compat\\__init__.py",
+    ".venv\\Lib\\site-packages\\build-1.3.0.dist-info\\REQUESTED",
+    ".venv\\Lib\\site-packages\\certifi\\py.typed",
+    ".venv\\Lib\\site-packages\\certifi-2025.10.5.dist-info\\REQUESTED",
+    ".venv\\Lib\\site-packages\\charset_normalizer\\py.typed",
+    ".venv\\Lib\\site-packages\\charset_normalizer-3.4.4.dist-info\\REQUESTED",
+    ".venv\\Lib\\site-packages\\colorama-0.4.6.dist-info\\REQUESTED",
+    ".venv\\Lib\\site-packages\\coverage-7.11.0.dist-info\\REQUESTED",
+    ".venv\\Lib\\site-packages\\docutils-0.22.2.dist-info\\REQUESTED",
+    ".venv\\Lib\\site-packages\\execnet\\py.typed",
+    ".venv\\Lib\\site-packages\\execnet-2.1.1.dist-info\\REQUESTED",
+    ".venv\\Lib\\site-packages\\id-1.5.0.dist-info\\REQUESTED",
+    ".venv\\Lib\\site-packages\\idna\\py.typed",
+    ".venv\\Lib\\site-packages\\idna-3.11.dist-info\\REQUESTED",
+    ".venv\\Lib\\site-packages\\iniconfig\\py.typed",
+    ".venv\\Lib\\site-packages\\iniconfig-2.3.0.dist-info\\REQUESTED",
+    ".venv\\Lib\\site-packages\\jaraco\\classes\\py.typed",
+    ".venv\\Lib\\site-packages\\jaraco\\classes\\__init__.py",
+    ".venv\\Lib\\site-packages\\jaraco\\context\\py.typed",
+    ".venv\\Lib\\site-packages\\jaraco\\functools\\py.typed",
+    ".venv\\Lib\\site-packages\\jaraco.classes-3.4.0.dist-info\\REQUESTED",
+    ".venv\\Lib\\site-packages\\jaraco.context-6.0.1.dist-info\\REQUESTED",
+    ".venv\\Lib\\site-packages\\jaraco_functools-4.3.0.dist-info\\REQUESTED",
+    ".venv\\Lib\\site-packages\\keyring\\py.typed",
+    ".venv\\Lib\\site-packages\\keyring\\backends\\__init__.py",
+    ".venv\\Lib\\site-packages\\keyring\\testing\\__init__.py",
+    ".venv\\Lib\\site-packages\\keyring-25.6.0.dist-info\\REQUESTED",
+    ".venv\\Lib\\site-packages\\markdown_it\\cli\\__init__.py",
+    ".venv\\Lib\\site-packages\\markdown_it\\common\\__init__.py",
+    ".venv\\Lib\\site-packages\\markdown_it_py-4.0.0.dist-info\\REQUESTED",
+    ".venv\\Lib\\site-packages\\mdurl-0.1.2.dist-info\\REQUESTED",
+    ".venv\\Lib\\site-packages\\more_itertools\\py.typed",
+    ".venv\\Lib\\site-packages\\more_itertools-10.8.0.dist-info\\REQUESTED",
+    ".venv\\Lib\\site-packages\\nh3\\py.typed",
+    ".venv\\Lib\\site-packages\\nh3-0.3.2.dist-info\\REQUESTED",
+    ".venv\\Lib\\site-packages\\packaging\\py.typed",
+    ".venv\\Lib\\site-packages\\packaging-25.0.dist-info\\REQUESTED",
+    ".venv\\Lib\\site-packages\\pip\\_internal\\operations\\__init__.py",
+    ".venv\\Lib\\site-packages\\pip\\_internal\\operations\\build\\__init__.py",
+    ".venv\\Lib\\site-packages\\pip\\_internal\\resolution\\__init__.py",
+    ".venv\\Lib\\site-packages\\pip\\_internal\\resolution\\legacy\\__init__.py",
+    ".venv\\Lib\\site-packages\\pip\\_internal\\resolution\\resolvelib\\__init__.py",
+    ".venv\\Lib\\site-packages\\pip\\_internal\\utils\\__init__.py",
+    ".venv\\Lib\\site-packages\\pip\\_vendor\\cachecontrol\\py.typed",
+    ".venv\\Lib\\site-packages\\pip\\_vendor\\certifi\\py.typed",
+    ".venv\\Lib\\site-packages\\pip\\_vendor\\chardet\\py.typed",
+    ".venv\\Lib\\site-packages\\pip\\_vendor\\chardet\\cli\\__init__.py",
+    ".venv\\Lib\\site-packages\\pip\\_vendor\\chardet\\metadata\\__init__.py",
+    ".venv\\Lib\\site-packages\\pip\\_vendor\\distro\\py.typed",
+    ".venv\\Lib\\site-packages\\pip\\_vendor\\idna\\py.typed",
+    ".venv\\Lib\\site-packages\\pip\\_vendor\\packaging\\py.typed",
+    ".venv\\Lib\\site-packages\\pip\\_vendor\\platformdirs\\py.typed",
+    ".venv\\Lib\\site-packages\\pip\\_vendor\\pyparsing\\py.typed",
+    ".venv\\Lib\\site-packages\\pip\\_vendor\\resolvelib\\py.typed",
+    ".venv\\Lib\\site-packages\\pip\\_vendor\\resolvelib\\compat\\__init__.py",
+    ".venv\\Lib\\site-packages\\pip\\_vendor\\rich\\py.typed",
+    ".venv\\Lib\\site-packages\\pip\\_vendor\\tenacity\\py.typed",
+    ".venv\\Lib\\site-packages\\pip\\_vendor\\truststore\\py.typed",
+    ".venv\\Lib\\site-packages\\pip\\_vendor\\urllib3\\contrib\\__init__.py",
+    ".venv\\Lib\\site-packages\\pip\\_vendor\\urllib3\\contrib\\_securetransport\\__init__.py",
+    ".venv\\Lib\\site-packages\\pip\\_vendor\\urllib3\\packages\\__init__.py",
+    ".venv\\Lib\\site-packages\\pip\\_vendor\\urllib3\\packages\\backports\\__init__.py",
+    ".venv\\Lib\\site-packages\\pip-24.0.dist-info\\REQUESTED",
+    ".venv\\Lib\\site-packages\\pluggy\\py.typed",
+    ".venv\\Lib\\site-packages\\pluggy-1.6.0.dist-info\\REQUESTED",
+    ".venv\\Lib\\site-packages\\pygments-2.19.2.dist-info\\REQUESTED",
+    ".venv\\Lib\\site-packages\\pyproject_hooks\\py.typed",
+    ".venv\\Lib\\site-packages\\pyproject_hooks-1.2.0.dist-info\\REQUESTED",
+    ".venv\\Lib\\site-packages\\pytest\\py.typed",
+    ".venv\\Lib\\site-packages\\pytest-8.4.2.dist-info\\REQUESTED",
+    ".venv\\Lib\\site-packages\\pytest_cov-7.0.0.dist-info\\REQUESTED",
+    ".venv\\Lib\\site-packages\\pytest_xdist-3.8.0.dist-info\\REQUESTED",
+    ".venv\\Lib\\site-packages\\pywin32_ctypes-0.2.3.dist-info\\REQUESTED",
+    ".venv\\Lib\\site-packages\\readme_renderer\\py.typed",
+    ".venv\\Lib\\site-packages\\readme_renderer-44.0.dist-info\\REQUESTED",
+    ".venv\\Lib\\site-packages\\requests-2.32.5.dist-info\\REQUESTED",
+    ".venv\\Lib\\site-packages\\requests_toolbelt\\auth\\__init__.py",
+    ".venv\\Lib\\site-packages\\requests_toolbelt\\cookies\\__init__.py",
+    ".venv\\Lib\\site-packages\\requests_toolbelt\\downloadutils\\__init__.py",
+    ".venv\\Lib\\site-packages\\requests_toolbelt\\utils\\__init__.py",
+    ".venv\\Lib\\site-packages\\requests_toolbelt-1.0.0.dist-info\\REQUESTED",
+    ".venv\\Lib\\site-packages\\rfc3986-2.0.0.dist-info\\REQUESTED",
+    ".venv\\Lib\\site-packages\\rich\\py.typed",
+    ".venv\\Lib\\site-packages\\rich-14.2.0.dist-info\\REQUESTED",
+    ".venv\\Lib\\site-packages\\ruff\\__init__.py",
+    ".venv\\Lib\\site-packages\\ruff-0.14.3.dist-info\\REQUESTED",
+    ".venv\\Lib\\site-packages\\twine\\py.typed",
+    ".venv\\Lib\\site-packages\\twine-6.2.0.dist-info\\REQUESTED",
+    ".venv\\Lib\\site-packages\\urllib3\\contrib\\__init__.py",
+    ".venv\\Lib\\site-packages\\urllib3-2.5.0.dist-info\\REQUESTED",
+    ".venv\\Lib\\site-packages\\_pytest\\py.typed",
+    ".venv\\Lib\\site-packages\\_pytest\\_py\\__init__.py"
+  ],
+  "large_files": [
+    {
+      "path": ".venv\\Scripts\\ruff.exe",
+      "size_mb": 38.96
+    }
+  ],
+  "duplicate_hashes": {
+    "d41d8cd98f00b204e9800998ecf8427e": [
+      ".venv\\.lock",
+      ".venv\\Lib\\site-packages\\_agent_tools_drnt.pth",
+      ".venv\\Lib\\site-packages\\agent_tools-0.1.1.dist-info\\REQUESTED",
+      ".venv\\Lib\\site-packages\\agent_tools_drnt-0.2.0.dist-info\\REQUESTED",
+      ".venv\\Lib\\site-packages\\build\\py.typed",
+      ".venv\\Lib\\site-packages\\build\\_compat\\__init__.py",
+      ".venv\\Lib\\site-packages\\build-1.3.0.dist-info\\REQUESTED",
+      ".venv\\Lib\\site-packages\\certifi\\py.typed",
+      ".venv\\Lib\\site-packages\\certifi-2025.10.5.dist-info\\REQUESTED",
+      ".venv\\Lib\\site-packages\\charset_normalizer\\py.typed",
+      ".venv\\Lib\\site-packages\\charset_normalizer-3.4.4.dist-info\\REQUESTED",
+      ".venv\\Lib\\site-packages\\colorama-0.4.6.dist-info\\REQUESTED",
+      ".venv\\Lib\\site-packages\\coverage-7.11.0.dist-info\\REQUESTED",
+      ".venv\\Lib\\site-packages\\docutils-0.22.2.dist-info\\REQUESTED",
+      ".venv\\Lib\\site-packages\\execnet\\py.typed",
+      ".venv\\Lib\\site-packages\\execnet-2.1.1.dist-info\\REQUESTED",
+      ".venv\\Lib\\site-packages\\id-1.5.0.dist-info\\REQUESTED",
+      ".venv\\Lib\\site-packages\\idna\\py.typed",
+      ".venv\\Lib\\site-packages\\idna-3.11.dist-info\\REQUESTED",
+      ".venv\\Lib\\site-packages\\iniconfig\\py.typed",
+      ".venv\\Lib\\site-packages\\iniconfig-2.3.0.dist-info\\REQUESTED",
+      ".venv\\Lib\\site-packages\\jaraco\\classes\\py.typed",
+      ".venv\\Lib\\site-packages\\jaraco\\classes\\__init__.py",
+      ".venv\\Lib\\site-packages\\jaraco\\context\\py.typed",
+      ".venv\\Lib\\site-packages\\jaraco\\functools\\py.typed",
+      ".venv\\Lib\\site-packages\\jaraco.classes-3.4.0.dist-info\\REQUESTED",
+      ".venv\\Lib\\site-packages\\jaraco.context-6.0.1.dist-info\\REQUESTED",
+      ".venv\\Lib\\site-packages\\jaraco_functools-4.3.0.dist-info\\REQUESTED",
+      ".venv\\Lib\\site-packages\\keyring\\py.typed",
+      ".venv\\Lib\\site-packages\\keyring\\backends\\__init__.py",
+      ".venv\\Lib\\site-packages\\keyring\\testing\\__init__.py",
+      ".venv\\Lib\\site-packages\\keyring-25.6.0.dist-info\\REQUESTED",
+      ".venv\\Lib\\site-packages\\markdown_it\\cli\\__init__.py",
+      ".venv\\Lib\\site-packages\\markdown_it\\common\\__init__.py",
+      ".venv\\Lib\\site-packages\\markdown_it_py-4.0.0.dist-info\\REQUESTED",
+      ".venv\\Lib\\site-packages\\mdurl-0.1.2.dist-info\\REQUESTED",
+      ".venv\\Lib\\site-packages\\more_itertools\\py.typed",
+      ".venv\\Lib\\site-packages\\more_itertools-10.8.0.dist-info\\REQUESTED",
+      ".venv\\Lib\\site-packages\\nh3\\py.typed",
+      ".venv\\Lib\\site-packages\\nh3-0.3.2.dist-info\\REQUESTED",
+      ".venv\\Lib\\site-packages\\packaging\\py.typed",
+      ".venv\\Lib\\site-packages\\packaging-25.0.dist-info\\REQUESTED",
+      ".venv\\Lib\\site-packages\\pip\\_internal\\operations\\__init__.py",
+      ".venv\\Lib\\site-packages\\pip\\_internal\\operations\\build\\__init__.py",
+      ".venv\\Lib\\site-packages\\pip\\_internal\\resolution\\__init__.py",
+      ".venv\\Lib\\site-packages\\pip\\_internal\\resolution\\legacy\\__init__.py",
+      ".venv\\Lib\\site-packages\\pip\\_internal\\resolution\\resolvelib\\__init__.py",
+      ".venv\\Lib\\site-packages\\pip\\_internal\\utils\\__init__.py",
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\cachecontrol\\py.typed",
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\certifi\\py.typed",
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\chardet\\py.typed",
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\chardet\\cli\\__init__.py",
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\chardet\\metadata\\__init__.py",
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\distro\\py.typed",
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\idna\\py.typed",
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\packaging\\py.typed",
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\platformdirs\\py.typed",
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\pyparsing\\py.typed",
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\resolvelib\\py.typed",
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\resolvelib\\compat\\__init__.py",
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\rich\\py.typed",
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\tenacity\\py.typed",
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\truststore\\py.typed",
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\urllib3\\contrib\\__init__.py",
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\urllib3\\contrib\\_securetransport\\__init__.py",
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\urllib3\\packages\\__init__.py",
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\urllib3\\packages\\backports\\__init__.py",
+      ".venv\\Lib\\site-packages\\pip-24.0.dist-info\\REQUESTED",
+      ".venv\\Lib\\site-packages\\pluggy\\py.typed",
+      ".venv\\Lib\\site-packages\\pluggy-1.6.0.dist-info\\REQUESTED",
+      ".venv\\Lib\\site-packages\\pygments-2.19.2.dist-info\\REQUESTED",
+      ".venv\\Lib\\site-packages\\pyproject_hooks\\py.typed",
+      ".venv\\Lib\\site-packages\\pyproject_hooks-1.2.0.dist-info\\REQUESTED",
+      ".venv\\Lib\\site-packages\\pytest\\py.typed",
+      ".venv\\Lib\\site-packages\\pytest-8.4.2.dist-info\\REQUESTED",
+      ".venv\\Lib\\site-packages\\pytest_cov-7.0.0.dist-info\\REQUESTED",
+      ".venv\\Lib\\site-packages\\pytest_xdist-3.8.0.dist-info\\REQUESTED",
+      ".venv\\Lib\\site-packages\\pywin32_ctypes-0.2.3.dist-info\\REQUESTED",
+      ".venv\\Lib\\site-packages\\readme_renderer\\py.typed",
+      ".venv\\Lib\\site-packages\\readme_renderer-44.0.dist-info\\REQUESTED",
+      ".venv\\Lib\\site-packages\\requests-2.32.5.dist-info\\REQUESTED",
+      ".venv\\Lib\\site-packages\\requests_toolbelt\\auth\\__init__.py",
+      ".venv\\Lib\\site-packages\\requests_toolbelt\\cookies\\__init__.py",
+      ".venv\\Lib\\site-packages\\requests_toolbelt\\downloadutils\\__init__.py",
+      ".venv\\Lib\\site-packages\\requests_toolbelt\\utils\\__init__.py",
+      ".venv\\Lib\\site-packages\\requests_toolbelt-1.0.0.dist-info\\REQUESTED",
+      ".venv\\Lib\\site-packages\\rfc3986-2.0.0.dist-info\\REQUESTED",
+      ".venv\\Lib\\site-packages\\rich\\py.typed",
+      ".venv\\Lib\\site-packages\\rich-14.2.0.dist-info\\REQUESTED",
+      ".venv\\Lib\\site-packages\\ruff\\__init__.py",
+      ".venv\\Lib\\site-packages\\ruff-0.14.3.dist-info\\REQUESTED",
+      ".venv\\Lib\\site-packages\\twine\\py.typed",
+      ".venv\\Lib\\site-packages\\twine-6.2.0.dist-info\\REQUESTED",
+      ".venv\\Lib\\site-packages\\urllib3\\contrib\\__init__.py",
+      ".venv\\Lib\\site-packages\\urllib3-2.5.0.dist-info\\REQUESTED",
+      ".venv\\Lib\\site-packages\\_pytest\\py.typed",
+      ".venv\\Lib\\site-packages\\_pytest\\_py\\__init__.py"
+    ],
+    "6ca31030b0a5263780f92bc3d254149b": [
+      ".venv\\Lib\\site-packages\\agent_tools-0.1.1.dist-info\\entry_points.txt",
+      ".venv\\Lib\\site-packages\\agent_tools_drnt-0.2.0.dist-info\\entry_points.txt"
+    ],
+    "45210da832f9626829457a65e9e7c4d0": [
+      ".venv\\Lib\\site-packages\\agent_tools-0.1.1.dist-info\\INSTALLER",
+      ".venv\\Lib\\site-packages\\agent_tools_drnt-0.2.0.dist-info\\INSTALLER",
+      ".venv\\Lib\\site-packages\\build-1.3.0.dist-info\\INSTALLER",
+      ".venv\\Lib\\site-packages\\certifi-2025.10.5.dist-info\\INSTALLER",
+      ".venv\\Lib\\site-packages\\charset_normalizer-3.4.4.dist-info\\INSTALLER",
+      ".venv\\Lib\\site-packages\\colorama-0.4.6.dist-info\\INSTALLER",
+      ".venv\\Lib\\site-packages\\coverage-7.11.0.dist-info\\INSTALLER",
+      ".venv\\Lib\\site-packages\\docutils-0.22.2.dist-info\\INSTALLER",
+      ".venv\\Lib\\site-packages\\execnet-2.1.1.dist-info\\INSTALLER",
+      ".venv\\Lib\\site-packages\\id-1.5.0.dist-info\\INSTALLER",
+      ".venv\\Lib\\site-packages\\idna-3.11.dist-info\\INSTALLER",
+      ".venv\\Lib\\site-packages\\iniconfig-2.3.0.dist-info\\INSTALLER",
+      ".venv\\Lib\\site-packages\\jaraco.classes-3.4.0.dist-info\\INSTALLER",
+      ".venv\\Lib\\site-packages\\jaraco.context-6.0.1.dist-info\\INSTALLER",
+      ".venv\\Lib\\site-packages\\jaraco_functools-4.3.0.dist-info\\INSTALLER",
+      ".venv\\Lib\\site-packages\\keyring-25.6.0.dist-info\\INSTALLER",
+      ".venv\\Lib\\site-packages\\markdown_it_py-4.0.0.dist-info\\INSTALLER",
+      ".venv\\Lib\\site-packages\\mdurl-0.1.2.dist-info\\INSTALLER",
+      ".venv\\Lib\\site-packages\\more_itertools-10.8.0.dist-info\\INSTALLER",
+      ".venv\\Lib\\site-packages\\nh3-0.3.2.dist-info\\INSTALLER",
+      ".venv\\Lib\\site-packages\\packaging-25.0.dist-info\\INSTALLER",
+      ".venv\\Lib\\site-packages\\pluggy-1.6.0.dist-info\\INSTALLER",
+      ".venv\\Lib\\site-packages\\pygments-2.19.2.dist-info\\INSTALLER",
+      ".venv\\Lib\\site-packages\\pyproject_hooks-1.2.0.dist-info\\INSTALLER",
+      ".venv\\Lib\\site-packages\\pytest-8.4.2.dist-info\\INSTALLER",
+      ".venv\\Lib\\site-packages\\pytest_cov-7.0.0.dist-info\\INSTALLER",
+      ".venv\\Lib\\site-packages\\pytest_xdist-3.8.0.dist-info\\INSTALLER",
+      ".venv\\Lib\\site-packages\\pywin32_ctypes-0.2.3.dist-info\\INSTALLER",
+      ".venv\\Lib\\site-packages\\readme_renderer-44.0.dist-info\\INSTALLER",
+      ".venv\\Lib\\site-packages\\requests-2.32.5.dist-info\\INSTALLER",
+      ".venv\\Lib\\site-packages\\requests_toolbelt-1.0.0.dist-info\\INSTALLER",
+      ".venv\\Lib\\site-packages\\rfc3986-2.0.0.dist-info\\INSTALLER",
+      ".venv\\Lib\\site-packages\\rich-14.2.0.dist-info\\INSTALLER",
+      ".venv\\Lib\\site-packages\\ruff-0.14.3.dist-info\\INSTALLER",
+      ".venv\\Lib\\site-packages\\twine-6.2.0.dist-info\\INSTALLER",
+      ".venv\\Lib\\site-packages\\urllib3-2.5.0.dist-info\\INSTALLER"
+    ],
+    "e2fcb0ad9ea59332c808928b4b439e7a": [
+      ".venv\\Lib\\site-packages\\agent_tools-0.1.1.dist-info\\WHEEL",
+      ".venv\\Lib\\site-packages\\agent_tools_drnt-0.2.0.dist-info\\WHEEL",
+      ".venv\\Lib\\site-packages\\pygments-2.19.2.dist-info\\WHEEL",
+      ".venv\\Lib\\site-packages\\pytest_cov-7.0.0.dist-info\\WHEEL",
+      ".venv\\Lib\\site-packages\\urllib3-2.5.0.dist-info\\WHEEL"
+    ],
+    "eca1d2e32987c5c9fd85f21a0c92d672": [
+      ".venv\\Lib\\site-packages\\build-1.3.0.dist-info\\WHEEL",
+      ".venv\\Lib\\site-packages\\docutils-0.22.2.dist-info\\WHEEL",
+      ".venv\\Lib\\site-packages\\idna-3.11.dist-info\\WHEEL",
+      ".venv\\Lib\\site-packages\\markdown_it_py-4.0.0.dist-info\\WHEEL",
+      ".venv\\Lib\\site-packages\\more_itertools-10.8.0.dist-info\\WHEEL",
+      ".venv\\Lib\\site-packages\\packaging-25.0.dist-info\\WHEEL"
+    ],
+    "08dd01ac2afdbb287cc668d51c7056c8": [
+      ".venv\\Lib\\site-packages\\certifi-2025.10.5.dist-info\\WHEEL",
+      ".venv\\Lib\\site-packages\\iniconfig-2.3.0.dist-info\\WHEEL",
+      ".venv\\Lib\\site-packages\\jaraco_functools-4.3.0.dist-info\\WHEEL",
+      ".venv\\Lib\\site-packages\\pytest-8.4.2.dist-info\\WHEEL",
+      ".venv\\Lib\\site-packages\\pytest_xdist-3.8.0.dist-info\\WHEEL",
+      ".venv\\Lib\\site-packages\\requests-2.32.5.dist-info\\WHEEL",
+      ".venv\\Lib\\site-packages\\twine-6.2.0.dist-info\\WHEEL"
+    ],
+    "041040af4dec511d4a904e11a9b43fe8": [
+      ".venv\\Lib\\site-packages\\charset_normalizer-3.4.4.dist-info\\WHEEL",
+      ".venv\\Lib\\site-packages\\coverage-7.11.0.dist-info\\WHEEL"
+    ],
+    "f781d59416d57343be4fa5aa95675f57": [
+      ".venv\\Lib\\site-packages\\colorama\\ansi.py",
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\colorama\\ansi.py"
+    ],
+    "5c7f0a17889e5063b412b1ba41048dd3": [
+      ".venv\\Lib\\site-packages\\colorama\\ansitowin32.py",
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\colorama\\ansitowin32.py"
+    ],
+    "1a15620a349c61b3c9c135dfcd47bd73": [
+      ".venv\\Lib\\site-packages\\colorama\\initialise.py",
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\colorama\\initialise.py"
+    ],
+    "0af1249cc740b035c9018a878510ee8e": [
+      ".venv\\Lib\\site-packages\\colorama\\win32.py",
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\colorama\\win32.py"
+    ],
+    "a52a65aeedfbf43c54d6302f0d2809cb": [
+      ".venv\\Lib\\site-packages\\colorama\\winterm.py",
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\colorama\\winterm.py"
+    ],
+    "c2daa3dfab2ba0694195cf5f15a32808": [
+      ".venv\\Lib\\site-packages\\colorama\\__init__.py",
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\colorama\\__init__.py"
+    ],
+    "dc2f6c46a1fb2d9a72cc88d7f39bc79c": [
+      ".venv\\Lib\\site-packages\\colorama\\tests\\ansitowin32_test.py",
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\colorama\\tests\\ansitowin32_test.py"
+    ],
+    "5986a9683e8505bb1a6bb312767143e3": [
+      ".venv\\Lib\\site-packages\\colorama\\tests\\ansi_test.py",
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\colorama\\tests\\ansi_test.py"
+    ],
+    "711f7c7a03992d3c9b8523960e2cbffb": [
+      ".venv\\Lib\\site-packages\\colorama\\tests\\initialise_test.py",
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\colorama\\tests\\initialise_test.py"
+    ],
+    "7634e0302b0f5f962627b1922b07a3b9": [
+      ".venv\\Lib\\site-packages\\colorama\\tests\\isatty_test.py",
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\colorama\\tests\\isatty_test.py"
+    ],
+    "31142629e641450ac51d1d4556112c7c": [
+      ".venv\\Lib\\site-packages\\colorama\\tests\\utils.py",
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\colorama\\tests\\utils.py"
+    ],
+    "3322cabd2108da984bd053bf61b8c1cc": [
+      ".venv\\Lib\\site-packages\\colorama\\tests\\winterm_test.py",
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\colorama\\tests\\winterm_test.py"
+    ],
+    "b1fda43e92dec74456ef61c18b3071ff": [
+      ".venv\\Lib\\site-packages\\colorama\\tests\\__init__.py",
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\colorama\\tests\\__init__.py"
+    ],
+    "d2ad67f6407aa7879970624d256be823": [
+      ".venv\\Lib\\site-packages\\docutils\\writers\\html4css1\\template.txt",
+      ".venv\\Lib\\site-packages\\docutils\\writers\\html5_polyglot\\template.txt"
+    ],
+    "dc0a321dc012acfdd024c396c6c5e9d6": [
+      ".venv\\Lib\\site-packages\\id-1.5.0.dist-info\\LICENSE",
+      ".venv\\Lib\\site-packages\\packaging-25.0.dist-info\\licenses\\LICENSE.APACHE",
+      ".venv\\Lib\\site-packages\\requests-2.32.5.dist-info\\licenses\\LICENSE"
+    ],
+    "141643e11c48898150daa83802dbc65f": [
+      ".venv\\Lib\\site-packages\\jaraco.classes-3.4.0.dist-info\\LICENSE",
+      ".venv\\Lib\\site-packages\\jaraco.context-6.0.1.dist-info\\LICENSE",
+      ".venv\\Lib\\site-packages\\keyring-25.6.0.dist-info\\LICENSE"
+    ],
+    "0ba8d736b7b4ab182687318b0497e61e": [
+      ".venv\\Lib\\site-packages\\jaraco.classes-3.4.0.dist-info\\top_level.txt",
+      ".venv\\Lib\\site-packages\\jaraco.context-6.0.1.dist-info\\top_level.txt",
+      ".venv\\Lib\\site-packages\\jaraco_functools-4.3.0.dist-info\\top_level.txt"
+    ],
+    "bd2fa011a5e69d2b68df68fbc59f8be6": [
+      ".venv\\Lib\\site-packages\\markdown_it\\py.typed",
+      ".venv\\Lib\\site-packages\\mdurl\\py.typed",
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\tomli\\py.typed"
+    ],
+    "de664fedc083927d3d084f416190d876": [
+      ".venv\\Lib\\site-packages\\packaging\\_structures.py",
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\packaging\\_structures.py"
+    ],
+    "d76d6d8139fe610937276986c133bcd2": [
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\distlib\\t64.exe",
+      ".venv\\Scripts\\pip.exe",
+      ".venv\\Scripts\\pip3.12.exe",
+      ".venv\\Scripts\\pip3.exe"
+    ],
+    "75b034b791db82c44433d5f0e25287a8": [
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\pygments\\formatters\\_mapping.py",
+      ".venv\\Lib\\site-packages\\pygments\\formatters\\_mapping.py"
+    ],
+    "c84a2ebc284aa00039711cda492e22b3": [
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\requests\\auth.py",
+      ".venv\\Lib\\site-packages\\requests\\auth.py"
+    ],
+    "94eb29001b47e2886c00d1e201b8733d": [
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\requests\\hooks.py",
+      ".venv\\Lib\\site-packages\\requests\\hooks.py"
+    ],
+    "60417b585ecaf66d9aa65a245be10701": [
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\requests\\sessions.py",
+      ".venv\\Lib\\site-packages\\requests\\sessions.py"
+    ],
+    "077948910ae6fb44dc6e58d3d25d6aee": [
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\requests\\structures.py",
+      ".venv\\Lib\\site-packages\\requests\\structures.py"
+    ],
+    "9dfff48651ad4c1cd36b1229e869d749": [
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\requests\\_internal_utils.py",
+      ".venv\\Lib\\site-packages\\requests\\_internal_utils.py"
+    ],
+    "9f03fdecbcd28eb49a7572a2efc85d3a": [
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\rich\\color_triplet.py",
+      ".venv\\Lib\\site-packages\\rich\\color_triplet.py"
+    ],
+    "d32c7ef426f5ef568db7f6fa3acaae07": [
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\rich\\columns.py",
+      ".venv\\Lib\\site-packages\\rich\\columns.py"
+    ],
+    "cef54cefaa299620f5784fd7767f42e5": [
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\rich\\constrain.py",
+      ".venv\\Lib\\site-packages\\rich\\constrain.py"
+    ],
+    "b7ed359477b4d6beb67ce0e6151da181": [
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\rich\\errors.py",
+      ".venv\\Lib\\site-packages\\rich\\errors.py"
+    ],
+    "eedd79e924fc4c14dd6f3df7d8f460e3": [
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\rich\\file_proxy.py",
+      ".venv\\Lib\\site-packages\\rich\\file_proxy.py"
+    ],
+    "9a85d7d329b3550929e01d7b08f6ab05": [
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\rich\\measure.py",
+      ".venv\\Lib\\site-packages\\rich\\measure.py"
+    ],
+    "d2f3f5a559bcf79942ce62b742fb2ce2": [
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\rich\\pager.py",
+      ".venv\\Lib\\site-packages\\rich\\pager.py"
+    ],
+    "2b7a3fc13dcde9deca6d3a7217b45de8": [
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\rich\\region.py",
+      ".venv\\Lib\\site-packages\\rich\\region.py"
+    ],
+    "26697a919bf9b0eed369a89647145303": [
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\rich\\terminal_theme.py",
+      ".venv\\Lib\\site-packages\\rich\\terminal_theme.py"
+    ],
+    "579b6ab8dacc395e63fff4800b1c6d3c": [
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\rich\\themes.py",
+      ".venv\\Lib\\site-packages\\rich\\themes.py"
+    ],
+    "8f1550dde4ac01ba19411df7151db61f": [
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\rich\\_emoji_codes.py",
+      ".venv\\Lib\\site-packages\\rich\\_emoji_codes.py"
+    ],
+    "aa906731d3f9ee1af861a15115e9c904": [
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\rich\\_emoji_replace.py",
+      ".venv\\Lib\\site-packages\\rich\\_emoji_replace.py"
+    ],
+    "fa1ea276aabd62b2c707f7e1eab18e36": [
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\rich\\_fileno.py",
+      ".venv\\Lib\\site-packages\\rich\\_fileno.py"
+    ],
+    "cb02e73e65dd0d4e5fb7fa97608275e5": [
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\rich\\_loop.py",
+      ".venv\\Lib\\site-packages\\rich\\_loop.py"
+    ],
+    "e16fbfbe318c86c37b7730154d2d2ce8": [
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\rich\\_palettes.py",
+      ".venv\\Lib\\site-packages\\rich\\_palettes.py"
+    ],
+    "285ad4f0fba46377d8de4ded53a60ec1": [
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\rich\\_pick.py",
+      ".venv\\Lib\\site-packages\\rich\\_pick.py"
+    ],
+    "828ab48af65815e9e266054c64ce1b7e": [
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\rich\\_spinners.py",
+      ".venv\\Lib\\site-packages\\rich\\_spinners.py"
+    ],
+    "dc38e75c7f9b0aace5f9cbe9fa826460": [
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\rich\\_stack.py",
+      ".venv\\Lib\\site-packages\\rich\\_stack.py"
+    ],
+    "ae43057547af31fdad66b2df35d85a23": [
+      ".venv\\Lib\\site-packages\\pip\\_vendor\\rich\\_timer.py",
+      ".venv\\Lib\\site-packages\\rich\\_timer.py"
+    ],
+    "365c9bfeb7d89244f2ce01c1de44cb85": [
+      ".venv\\Lib\\site-packages\\pip-24.0.dist-info\\INSTALLER",
+      ".venv\\Lib\\site-packages\\pip-24.0.dist-info\\top_level.txt"
+    ],
+    "6dd17bd56e6351688b0eddc23a65bc6b": [
+      ".venv\\Scripts\\agt.exe",
+      ".venv\\Scripts\\coverage-3.12.exe",
+      ".venv\\Scripts\\coverage.exe",
+      ".venv\\Scripts\\coverage3.exe",
+      ".venv\\Scripts\\docutils.exe",
+      ".venv\\Scripts\\keyring.exe",
+      ".venv\\Scripts\\markdown-it.exe",
+      ".venv\\Scripts\\normalizer.exe",
+      ".venv\\Scripts\\py.test.exe",
+      ".venv\\Scripts\\pygmentize.exe",
+      ".venv\\Scripts\\pyproject-build.exe",
+      ".venv\\Scripts\\pytest.exe",
+      ".venv\\Scripts\\rst2html.exe",
+      ".venv\\Scripts\\rst2html4.exe",
+      ".venv\\Scripts\\rst2html5.exe",
+      ".venv\\Scripts\\rst2latex.exe",
+      ".venv\\Scripts\\rst2man.exe",
+      ".venv\\Scripts\\rst2odt.exe",
+      ".venv\\Scripts\\rst2pseudoxml.exe",
+      ".venv\\Scripts\\rst2s5.exe",
+      ".venv\\Scripts\\rst2xetex.exe",
+      ".venv\\Scripts\\rst2xml.exe",
+      ".venv\\Scripts\\twine.exe"
+    ]
+  },
+  "summary": {
+    "total_files": 2812,
+    "total_size_kb": 79523.857421875
+  }
+}

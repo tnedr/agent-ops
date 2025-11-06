@@ -2,16 +2,30 @@
   "command-runner.commands": {
     "math.multiply": "python ${workspaceFolder}/.tools/scripts/multiply.py ${input:a} ${input:b}",
     "time.now": "python ${workspaceFolder}/.tools/scripts/current_time.py",
-    "env.check": "python ${workspaceFolder}/.tools/scripts/venv_check.py"
+    "env.check": "python ${workspaceFolder}/.tools/scripts/venv_check.py",
+    "agt start": "agt start",
+    "agt run": "agt run \"${input:cmd}\"",
+    "agt commit": "agt commit \"${input:msg}\"",
+    "agt push": "agt push",
+    "agt merge": "agt merge",
+    "agt clean": "agt clean"
   },
   "command-runner.inputs": {
     "a": {
       "type": "promptString",
-      "description": "Első tényező"
+      "description": "Els\u00c5\u2018 t\u00c3\u00a9nyez\u00c5\u2018"
     },
     "b": {
       "type": "promptString",
-      "description": "Második tényező"
+      "description": "M\u00c3\u00a1sodik t\u00c3\u00a9nyez\u00c5\u2018"
+    },
+    "cmd": {
+      "type": "promptString",
+      "description": "Command to run in agent worktree"
+    },
+    "msg": {
+      "type": "promptString",
+      "description": "Commit message"
     }
   }
 }

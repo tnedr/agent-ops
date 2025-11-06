@@ -1,0 +1,20 @@
+{
+  "command-runner.commands": {
+    "agt start": "agt start",
+    "agt run": "agt run \"${input:cmd}\"",
+    "agt commit": "agt commit \"${input:msg}\"",
+    "agt push": "agt push",
+    "agt merge": "agt merge",
+    "agt clean": "agt clean"
+  },
+  "command-runner.inputs": {
+    "cmd": {
+      "type": "promptString",
+      "description": "Command to run in agent worktree"
+    },
+    "msg": {
+      "type": "promptString",
+      "description": "Commit message"
+    }
+  }
+}

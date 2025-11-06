@@ -1,0 +1,50 @@
+{
+  "command-runner.commands": {
+    "agt ws new": {
+      "command": "agt ws new",
+      "description": "Create a new isolated agent worktree (equivalent to 'agt start')"
+    },
+    "agt ws run": {
+      "command": "agt ws run \"${input:cmd}\"",
+      "description": "Run a command in the agent worktree (equivalent to 'agt run')"
+    },
+    "agt ws save": {
+      "command": "agt ws save \"${input:msg}\"",
+      "description": "Commit all changes in the agent worktree (equivalent to 'agt commit')"
+    },
+    "agt ws push": {
+      "command": "agt ws push",
+      "description": "Push the agent branch to remote repository (equivalent to 'agt push')"
+    },
+    "agt ws merge": {
+      "command": "agt ws merge",
+      "description": "Merge agent branch back to main (fast-forward only, equivalent to 'agt merge')"
+    },
+    "agt ws clean": {
+      "command": "agt ws clean",
+      "description": "Remove the agent worktree after PR is merged (equivalent to 'agt clean')"
+    },
+    "agt cfg vscode": {
+      "command": "agt cfg vscode",
+      "description": "Generate VS Code Command Runner settings with agt commands"
+    },
+    "agt env check": {
+      "command": "agt env check",
+      "description": "Show environment information (Python version, platform)"
+    },
+    "time.now": {
+      "command": "python ${workspaceFolder}/.tools/scripts/current_time.py",
+      "description": "Get current UTC timestamp"
+    }
+  },
+  "command-runner.inputs": {
+    "cmd": {
+      "type": "promptString",
+      "description": "Command to run in agent worktree"
+    },
+    "msg": {
+      "type": "promptString",
+      "description": "Commit message"
+    }
+  }
+}
